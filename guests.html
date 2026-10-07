@@ -1,1177 +1,336 @@
-<!-- Credits: -->
-<!-- "Confetti button" by Mikael Ainalem on CodePen: https://codepen.io/ainalem/pen/zXoEmx -->
-
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نادي صوفيا للفلسفة - الضيوف </title>
-  <!-- Open Graph meta tags for Messenger / social preview -->
-  <meta property="og:title" content="نادي صوفيا للفلسفة">
-  <meta property="og:description" content="مرحبا بكم في نادي صوفيا للفلسفة">
-  <meta property="og:image"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
+  <title>الضيوف و الزيارات - نادي صوفيا للفلسفة</title>
+
+  <meta property="og:title" content="الضيوف و الزيارات - نادي صوفيا للفلسفة">
+  <meta property="og:description" content="فلاسفة و باحثون استضافهم نادي صوفيا، و فضاءات ثقافية زارها">
+  <meta property="og:image" content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
+  <meta property="og:url" content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/guests.html">
   <meta property="og:type" content="website">
-  <meta property="og:url"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/guests.html">
-
-  <!-- Twitter card (optional) -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:title" content="نادي صوفيا للفلسفة">
-  <meta name="twitter:description" content="مرحبا بكم في نادي صوفيا للفلسفة">
-  <meta name="twitter:image"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-
-  <link rel="icon" type="image/jpeg"
-    href="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-
-
-  <style>
-    @font-face {
-      font-family: 'Taro';
-      src: url('fonts/alfont_com_taro.ttf') format('truetype');
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-    }
-
-    /* default = dark */
-    body {
-      display: flex;
-      flex-direction: column;
-      /* 👈 THIS IS THE KEY */
-      align-items: center;
-      background-color: #000000;
-      font-family: 'Taro', sans-serif;
-      transition: background-color 0.4s ease-in-out;
-      padding-top: 2rem;
-    }
-
-
-    nav.amazing-tabs {
-      padding: 1rem 2rem;
-      user-select: none;
-    }
-
-    button {
-      border: none;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .filters-container {
-      padding: 0 3rem;
-      max-height: 3.8rem;
-    }
-
-    .filters-wrapper {
-      position: relative;
-    }
-
-    .filter-tabs {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-      padding: 0.3rem;
-    }
-
-    .filter-tabs li {
-      z-index: 1;
-    }
-
-    .filter-button {
-      min-width: 8rem;
-      height: 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      font-family: 'Taro', Arial, sans-serif;
-      color: #f57c00;
-      transition: color 0.3s ease-in-out;
-    }
-
-    .filter-slider {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .filter-slider-rect {
-      height: 3rem;
-      width: 50%;
-      /* match the button width */
-      border-radius: 0.8rem;
-      background-color: #ffd700;
-      transform: translateX(0);
-      /* start at first tab */
-      transition: transform 0.4s ease-in-out, background-color 0.4s ease-in-out, width 0.4s ease-in-out;
-    }
-
-
-    /* ------------------- GUEST SECTION ------------------- */
-    .guests-section {
-      margin-top: 3rem;
-      display: flex;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      /* smaller gap for tiny screens */
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: flex-start;
-    }
-
-
-    /* ------------------- VISITS SECTION ------------------- */
-    .visits-section {
-      margin-top: 3rem;
-      display: flex;
-      gap: clamp(0.5rem, 2vw, 1rem);
-      justify-content: center;
-      flex-wrap: wrap;
-      align-items: flex-start;
-    }
-
-
-    .visits-section .guest-card .guest-text {
-      min-height: 6rem;
-      text-align: center;
-    }
-
-    .visits-section .guest-card .guest-name {
-      margin-top: 0.8rem;
-      font-size: clamp(1rem, 2vw, 1.4rem);
-      color: #000000;
-    }
-
-    .visits-section .guest-card .guest-description {
-      margin-top: 0.4rem;
-      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-      color: #000000;
-      line-height: 1.4;
-    }
-
-    .visits-section .guest-card .guest-event a {
-      color: #000000;
-      text-decoration: underline;
-      font-size: clamp(1rem, 1.5vw, 1.3rem);
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-
-    .visits-section .guest-card .guest-event a:hover {
-      color: #007BFF;
-    }
-
-    .visits-section .guest-card img {
-      filter:
-        drop-shadow(-2px 0 0 #000000) drop-shadow(2px 0 0 #000000) drop-shadow(0 -2px 0 #000000) drop-shadow(0 2px 0 #000000) drop-shadow(-1.5px -1.5px 0 #000000) drop-shadow(1.5px 1.5px 0 #000000) drop-shadow(-1.5px 1.5px 0 #000000) drop-shadow(1.5px -1.5px 0 #000000);
-    }
-
-
-    .hidden {
-      display: none;
-      /* removes from layout */
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(10px);
-    }
-
-    .guest-card {
-      flex: 1 1 clamp(140px, 45%, 250px);
-      /* dynamic width */
-      max-width: 250px;
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    .guest-card img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      /* maintain square shape */
-      object-fit: cover;
-      border-radius: 1.6rem;
-      filter:
-        drop-shadow(-2px 0 0 #ffd700) drop-shadow(2px 0 0 #ffd700) drop-shadow(0 -2px 0 #ffd700) drop-shadow(0 2px 0 #ffd700) drop-shadow(-1.5px -1.5px 0 #ffd700) drop-shadow(1.5px 1.5px 0 #ffd700) drop-shadow(-1.5px 1.5px 0 #ffd700) drop-shadow(1.5px -1.5px 0 #ffd700);
-    }
-
-    .guest-text {
-      min-height: 6rem;
-      /* keep text at same level */
-    }
-
-    .guest-name {
-      margin-top: 0.8rem;
-      font-size: clamp(1rem, 2vw, 1.4rem);
-      color: #ffd700;
-    }
-
-    .guest-description {
-      margin-top: 0.4rem;
-      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-      color: #ffd700;
-      line-height: 1.4;
-    }
-
-    .guest-event {
-      margin-top: 0.0rem;
-      /* moved slightly up */
-      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-      margin-bottom: 1rem;
-      /* space below link */
-
-    }
-
-
-    .guest-event a {
-      color: #ffd700;
-      text-decoration: underline;
-      transition: color 0.3s ease;
-      font-size: clamp(1rem, 1.5vw, 1.3rem);
-      /* responsive size */
-      font-weight: bold;
-      /* optional: make it stand out */
-      margin-top: 0.0rem;
-      /* optional: small spacing above */
-      display: inline-block;
-      /* ensures margin works */
-    }
-
-
-    .guest-event a:hover {
-      color: #007BFF;
-    }
-
-
-    /* ===== Canvas Button (isolated) ===== */
-    .canvas-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 999;
-      transform: scale(0.7);
-      transform-origin: top right;
-      background-color: rgba(255, 209, 32, 0.7);
-      padding: 1px;
-      /* controls size of the yellow background */
-      border-radius: 50%;
-      /* keeps it circular */
-    }
-
-    /* Button visuals */
-    .hover {
-      border-radius: 50px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
-        0 3px 6px rgba(0, 0, 0, 0.23);
-      cursor: pointer;
-      height: 100px;
-      width: 100px;
-      position: relative;
-    }
-
-    .shadow {
-      position: absolute;
-      margin-top: 2px;
-    }
-
-    .hover svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .clip {
-      background-color: #e0e0e0;
-      border-radius: 50px;
-      height: 100px;
-      width: 100px;
-      position: absolute;
-      clip-path: polygon(0% 0%, 0% 52.447069%, 30.844539% 52.447%, 30.844539% 50.237396%,
-          30.844539% 48.027791%, 30.844539% 45.818186%, 30.844539% 43.608582%,
-          31.074905% 42.257032%, 31.65035% 40.866508%, 32.397397% 39.609496%,
-          33.142567% 38.658487%, 35.677378% 36.327021%, 39.127089% 33.663669%,
-          43.075878% 30.89027%, 47.107926% 28.228662%, 48.519882% 27.751201%,
-          50.433213% 27.58916%, 52.319085% 27.746871%, 53.648664% 28.228662%,
-          57.127578% 30.883904%, 60.932631% 33.942292%, 64.454458% 36.928097%,
-          67.083693% 39.365593%, 67.93372% 40.373944%, 68.477633% 41.419308%,
-          68.766519% 42.631058%, 68.851461% 44.138564%, 68.851461% 48.469673%,
-          68.851461% 52.800782%, 68.851461% 57.131891%, 68.851461% 61.463%,
-          68.394148% 63.593607%, 67.234211% 65.271838%, 65.689655% 66.371396%,
-          64.078489% 66.765981%, 62.752664% 66.765981%, 61.426839% 66.765981%,
-          60.101013% 66.765981%, 58.775188% 66.765981%, 57.551799% 66.396236%,
-          56.538683% 65.455904%, 55.848324% 64.198338%, 55.593208% 62.876894%,
-          55.593208% 61.595263%, 55.593208% 60.313632%, 55.593208% 59.032001%,
-          55.593208% 57.75037%, 55.372582% 56.844737%, 54.769169% 56.243166%,
-          53.870669% 55.909062%, 52.764781% 55.805826%, 51.262179% 55.805826%,
-          49.759577% 55.805826%, 48.256975% 55.805826%, 46.754373% 55.805826%,
-          45.512872% 56.016456%, 44.683926% 56.588476%, 44.22729% 57.432085%,
-          44.102723% 58.457477%, 44.119797% 59.641849%, 44.1179% 60.911742%,
-          44.108414% 62.368716%, 44.102723% 64.114331%, 43.898513% 65.255375%,
-          43.351924% 66.213805%, 42.562016% 66.873799%, 41.627849% 67.119535%,
-          40.257829% 67.119535%, 38.88781% 67.119535%, 37.517791% 67.119535%,
-          36.147771% 67.119535%, 34.388618% 66.605533%, 32.669023% 65.277485%,
-          31.362995% 63.456329%, 30.844539% 61.463%, 30.844539% 59.209%,
-          30.844539% 56.955%, 30.844539% 54.701%, 30.844539% 52.447%, 0% 52.447%,
-          0% 100%, 100% 100%, 100% 0%);
-    }
-
-    .hover:hover .clip {
-      background-color: #f8f8f8;
-    }
-
-    .hover:active {
-      transform: translateY(2px);
-    }
-
-    /* Canvas container */
-    .container {
-      clip-path: circle(40px at 45px 50%);
-      height: 90px;
-      width: 90px;
-      overflow: hidden;
-      position: absolute;
-      top: 5px;
-      left: 5px;
-    }
-
-    #canvas {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Remove the blue outline when clicking/tapping */
-    a,
-    button {
-      outline: none;
-      /* remove default outline */
-      -webkit-tap-highlight-color: transparent;
-      /* remove tap highlight on mobile */
-    }
-
-    /* Optional: remove focus shadow on your hover div */
-    .hover:focus,
-    .hover:active {
-      outline: none;
-      box-shadow: none;
-    }
-
-    /* Tablets */
-    @media screen and (max-width: 900px) {
-      .canvas-button {
-        transform: scale(0.6);
-        padding: 0.5px;
-        top: 15px;
-        right: 15px;
-      }
-
-      .hover {
-        width: 80px;
-        height: 80px;
-      }
-
-      .clip {
-        width: 80px;
-        height: 80px;
-      }
-
-    }
-
-    @media screen and (max-width: 600px) {
-      .canvas-button {
-        transform: scale(0.5);
-        padding: 1px;
-        top: 15px;
-        right: 10px;
-      }
-
-      .clip {
-        width: 80px;
-        height: 80px;
-      }
-
-    }
-
-    /* ------------------- RESPONSIVE ------------------- */
-    @media (max-width: 768px) {
-      .guest-card {
-        flex: 1 1 45%;
-        /* 2 cards per row on tablet */
-        max-width: 45%;
-      }
-    }
-
-    /* ------------------- RESPONSIVE ------------------- */
-    @media (max-width: 480px) {
-
-      html,
-      body {
-        overflow-x: hidden;
-        /* prevent horizontal scroll */
-      }
-
-      .guests-section {
-        gap: 0.4rem;
-        /* reduce gap slightly */
-        padding: 0 0.2rem;
-        /* reduce side padding */
-        justify-content: space-between;
-        /* distribute cards nicely */
-      }
-
-      .guest-card {
-        flex: 1 1 calc(50% - 0.3rem);
-        /* width minus gap */
-        max-width: calc(50% - 0.3rem);
-        box-sizing: border-box;
-      }
-
-      .guest-card img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-        /* keep square */
-      }
-    }
-  </style>
+  <link rel="icon" type="image/jpeg" href="images/sophia.jpg">
+
+  <script>try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("sophia-lang"); if (l === "fr" || l === "en") { document.documentElement.lang = l; document.documentElement.dir = "ltr"; document.documentElement.className = "i18n-wait"; setTimeout(function () { document.documentElement.classList.remove("i18n-wait"); }, 1500); } } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Josefin+Sans:wght@300;400&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
 </head>
 
-<body>
+<body data-page="guests">
 
-  <div class="canvas-button">
-    <div class="container">
-      <canvas id="canvas"></canvas>
-    </div>
-    <a href="home.html" id="confetti-link">
-      <div class="hover">
-        <svg class="shadow" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-          <defs>
-            <filter id="a" x="-.024" width="1.048" y="-.024" height="1.048">
-              <feGaussianBlur stdDeviation="1" />
-            </filter>
-          </defs>
-          <path d="M20 20v32.36h10.845v-8.837c0-1.7 1.383-3.963
-  2.298-4.95
-  2.585-2.79 8.72-7.055 13.965-10.43 1.314-.845 5.374-.86
-  6.54
-  0 4.15 3.06 10.796 8.464 13.436 11.137 1.36 1.377 1.768
-  2.508 1.768 4.773v17.324c0 3.086-2.722 5.303-4.773
-  5.303h-5.304c-1.722
-  0-3.182-2.197-3.182-3.89v-5.126c0-1.426-1.255-1.944-2.83-1.944h-6.01c-1.947
-  0-2.688 1.203-2.65 2.65.04 1.57 0 3.093 0 5.658 0
-  1.592-1.178 3.006-2.476 3.006h-5.48c-2.205
-  0-5.157-3.03-5.303-5.657V52.36H20V80h60V20z" fill="#9eabb0" fill-rule="evenodd" stroke="#9eabb0" filter="url(#a)" />
-        </svg>
-        <div class="clip"></div>
-      </div>
-    </a>
-  </div>
-
-  <script>
-    const canvas = document.querySelector("#canvas");
-    const ctx = canvas.getContext("2d");
-    const container = document.querySelector(".container");
-    const link = document.querySelector("#confetti-link");
-
-    const config = { particleNumber: 300, maxParticleSize: 6, maxSpeed: 6, colorVariation: 40 };
-
-    function adjustConfigForScreen() {
-      if (window.innerWidth <= 600) {
-        config.maxParticleSize = 3; config.maxSpeed = 3; config.particleNumber = 150;
-      } else if (window.innerWidth <= 900) {
-        config.maxParticleSize = 4; config.maxSpeed = 4; config.particleNumber = 200;
-      } else {
-        config.maxParticleSize = 6; config.maxSpeed = 6; config.particleNumber = 300;
-      }
-    }
-    adjustConfigForScreen();
-    window.addEventListener("resize", adjustConfigForScreen);
-
-    const colors = [
-      { r: 255, g: 209, b: 32 },
-      { r: 255, g: 223, b: 70 },
-      { r: 255, g: 215, b: 0 },
-      { r: 255, g: 230, b: 100 }
-    ];
-
-    let particles = [];
-    function randomColor() { const c = colors[Math.floor(Math.random() * colors.length)]; return `rgba(${c.r},${c.g},${c.b},0.8)`; }
-    function Particle(x, y) { this.x = x; this.y = y; this.r = Math.random() * config.maxParticleSize; this.vx = (Math.random() - 0.5) * config.maxSpeed; this.vy = (Math.random() - 0.5) * config.maxSpeed; this.c = randomColor(); }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const radius = Math.min(canvas.width, canvas.height) / 2;
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        const dx = p.x - canvas.width / 2; const dy = p.y - canvas.height / 2;
-        if (dx * dx + dy * dy > radius * radius) { p.x -= p.vx; p.y -= p.vy; p.vx *= -0.5; p.vy *= -0.5; }
-        ctx.beginPath(); ctx.fillStyle = p.c; ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-      });
-    }
-
-    function resizeCanvas() {
-      const rect = container.getBoundingClientRect();
-      const padding = 6;
-      canvas.width = rect.width + padding * 2;
-      canvas.height = rect.height + padding * 2;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    link.addEventListener("click", e => {
-      e.preventDefault(); // stop immediate navigation
-
-      particles = [];
-      const rect = canvas.getBoundingClientRect();
-      const centerX = rect.width / 2, centerY = rect.height / 2;
-      for (let i = 0; i < config.particleNumber; i++) particles.push(new Particle(centerX, centerY));
-
-      let i = 0;
-      const anim = setInterval(() => {
-        draw();
-        if (i++ > 30) clearInterval(anim);
-      }, 16);
-
-      // Delay navigation by 1 second
-      setTimeout(() => { window.location.href = link.href; }, 1000);
-    });
-  </script>
-
-  <nav class="amazing-tabs">
-    <div class="filters-container">
-      <div class="filters-wrapper">
-
-        <ul class="filter-tabs">
-
-          <!-- الضيوف NOW GETS DARK MODE -->
-          <li>
-            <button class="filter-button" data-translate-value="0" data-slider-color="#ffd700" data-text-color="#000000"
-              data-body-color="#000000">
-              الضيوف
-            </button>
-          </li>
-
-          <!-- الزيارات NOW GETS YELLOW MODE (DEFAULT ACTIVE) -->
-
-          <li>
-            <button class="filter-button" data-translate-value="100%" data-slider-color="#000000"
-              data-text-color="#ffffff" data-body-color="#ffd700">
-              الزيارات
-            </button>
-          </li>
-        </ul>
-
-        <div class="filter-slider">
-          <div class="filter-slider-rect"></div>
-        </div>
-
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <span class="eyebrow" data-i18n="ph.eyebrow">الضيوف و الزيارات</span>
+      <h1 data-i18n="ph.title">أصوات <em>حاورناها</em>، و أماكن زرناها</h1>
+      <p data-i18n="ph.text">فلاسفة و باحثون و ناشطون استضافهم النادي، و فضاءات ثقافية و تعليمية حملنا إليها النقاش.</p>
+      <div class="actions">
+        <a href="#guests" class="btn btn-gold" data-i18n="ph.guests">الضيوف</a>
+        <a href="#visits" class="btn btn-ghost" data-i18n="ph.visits">الزيارات</a>
       </div>
     </div>
-  </nav>
-
-
-  <section class="guests-section">
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/Stop_pollution.png" alt="حركة Stop Pollution">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">حركة Stop Pollution</div>
-        <div class="guest-description">
-          حركة بيئية ومدنية بجهة قابس<br>
-          تطالب بالعدالة البيئية والحق في بيئة سليمة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/share/p/19YY8xwJ9G/" target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/الكهف.png" alt="الكهف">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">الكهف</div>
-        <div class="guest-description">
-          مبادرة شبابية وثقافية مستقلاّ<br>
-          فضاء للنقاش الفكري والعمل الثقافي والمدني
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/share/p/1d4CttM2Av/" target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/رشاد_طمبورة.png" alt="رشاد طمبورة">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">رشاد طمبورة</div>
-        <div class="guest-description">
-          طالب بالفيوم والجميلة وفنان جرافيتي<br>
-          ناشط حقوقي وفاعل مدني
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/share/p/19VGNXd6QZ/" target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/كريم_عبد_السلام.png" alt="كريم عبد السلام">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">كريم عبد السلام</div>
-        <div class="guest-description">
-          ناشط حقوقي وفاعل سياسي<br>
-          كاتب وموثق للتاريخ السياسي المعاصر
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/share/p/19VGNXd6QZ/" target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/عزيز_الشابي.png" alt="عزيز الشابي">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">عزيز الشابي</div>
-        <div class="guest-description">
-          باحث في العلوم القانونية والسياسية<br>
-          Stop Pollution عضو في حركة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/photo.php?fbid=1414771387323102&set=a.492184866248430&type=3&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/صابر عمّار.png" alt="صابر عمّار">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">صابر عمّار</div>
-        <div class="guest-description">
-          باحث و عضو في حركة
-          <br>Stop Pollution
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/photo.php?fbid=1414771387323102&set=a.492184866248430&type=3&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/عبد السلام حيدوري.png" alt="عبد السلام حيدوري">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">عبد السلام حيدوري</div>
-        <div class="guest-description">
-          باحث متخصص في الفلسفة الحديثة والمعاصرة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=1182644683869108&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/بكار الغريب.png" alt="بكار الغريب">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">بكار الغريب</div>
-        <div class="guest-description">
-          باحث جامعي
-        </div>
-      </div>
-      <div class="guest-event">
-        <!-- Add event link if available -->
-        <a href="https://www.facebook.com/permalink.php?story_fbid=910174374449475&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-
-    </div>
-
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper"
-        style="height: 220px; display: flex; align-items: center; justify-content: center; background-color: #fff2b8; border-radius: 1.6rem;">
-        <img src="images/OSAE.png" alt="OSAE"
-          style="max-width: 500px; max-height: 100%; object-fit: contain; filter: none;">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name"><br></div>
-        <div class="guest-description">
-          المرصد التونسي للسيادة الغذائية والبيئية
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=900932752040304&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/غادة_الشلبي.png" alt="غادة الشلبي">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">غادة الشلبي</div>
-        <div class="guest-description">
-          <!-- Add description if needed -->
-          باحثة و ناشطة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=839390511527862&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/فهمي_الرمضاني.png" alt="فهمي الرمضاني">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">فهمي الرمضاني</div>
-        <div class="guest-description">
-          أستاذ في التاريخ
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=839390511527862&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/نوفل حنفي.png" alt="نوفل حنفي">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">نوفل حنفي</div>
-        <div class="guest-description">
-          باحث </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=401334191756373&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/يوسف_الصديق.png" alt="يوسف الصديق">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">يوسف الصديق</div>
-        <div class="guest-description">
-          فيلسوف وعالم إنثروبولوجي
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=351598116729981&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/مراد_النجومي.png" alt="مراد النجومي">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">مراد النجومي</div>
-        <div class="guest-description">
-          باحث
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=330066552216471&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/كرّاي لعويشاوي.png" alt="كرّاي لعويشاوي">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">كرّاي لعويشاوي</div>
-        <div class="guest-description">
-          أستاذ فلسفة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=330066552216471&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/أم الزين بن شيخة.png" alt="أم الزين بن شيخة">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">أم الزين بن شيخة</div>
-        <div class="guest-description">
-          باحثة متخصصة في الفلسفة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=204934704729657&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/سعدية_مصباح.png" alt="سعدية مصباح">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">سعدية مصباح</div>
-        <div class="guest-description">
-          ناشطة حقوقية
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=201308871758907&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/عبد_الستار_السحباني.png" alt="عبد الستار السحباني">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">عبد الستار السحباني</div>
-        <div class="guest-description">
-          مختص في علم الإجتماع
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=201308871758907&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/مهدي سعيدان.png" alt="مهدي سعيدان">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">مهدي سعيدان</div>
-        <div class="guest-description">
-          أستاذ فلسفة
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/watch/?v=605957920803599" target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/حياة الوسلاتي حمدي.png" alt="حياة الوسلاتي حمدي">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name">حياة الوسلاتي حمدي</div>
-        <div class="guest-description">
-          رئيسة جمعيّة "أولاد أحمد تونس الشاعرة"
-        </div>
-      </div>
-      <div class="guest-event">
-        <a href="https://www.facebook.com/permalink.php?story_fbid=189015816321546&id=100063707634531&ref=embed_post"
-          target="_blank">
-          🔗 رابط الحدث
-        </a>
-      </div>
-    </div>
-
-
   </section>
 
-  <section class="visits-section">
-
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/كلية العلوم القانونية و السياسية و الاجتماعية بتونس.webp" alt="زيارة تجريبية">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;"> منشأ نادي صوفيا: كلية العلوم القانونية و السياسية و الاجتماعية
-          بتونس </div>
-        <div class="guest-description" style="color:#000000;">
-          <!-- optional description -->
+  <!-- Guests -->
+  <section class="block" id="guests" style="scroll-margin-top:72px">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="g.eyebrow">ضيوفنا</span>
+          <h2 data-i18n="g.title">ضيوف النادي</h2>
         </div>
       </div>
 
-      <div class="guest-event">
-        <a href="https://fsjpst.rnu.tn/ar/" target="_blank">
-          🗺️ رابط المكان
-        </a>
+      <div class="guests">
+        <div class="guest reveal">
+          <div class="photo logo"><img src="images/Stop_pollution.png" alt="Stop Pollution" loading="lazy"></div>
+          <h3 data-i18n="n17">حركة Stop Pollution</h3>
+          <p data-i18n="r17">حركة بيئية و مدنية بجهة قابس، تطالب بالعدالة البيئية و الحق في بيئة سليمة</p>
+          <a class="event" href="https://www.facebook.com/share/p/19YY8xwJ9G/" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo logo"><img src="images/الكهف.png" alt="الكهف" loading="lazy"></div>
+          <h3 data-i18n="n18">الكهف</h3>
+          <p data-i18n="r18">مبادرة شبابية و ثقافية مستقلّة، فضاء للنقاش الفكري و العمل الثقافي و المدني</p>
+          <a class="event" href="https://www.facebook.com/share/p/1d4CttM2Av/" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/رشاد_طمبورة.png" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 100%"></div>
+          <h3 data-i18n="n19">رشاد طمبورة</h3>
+          <p data-i18n="r19">طالب بالفنون الجميلة و فنان جرافيتي، ناشط حقوقي و فاعل مدني</p>
+          <a class="event" href="https://www.facebook.com/share/p/19VGNXd6QZ/" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/كريم_عبد_السلام.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n20">كريم عبد السلام</h3>
+          <p data-i18n="r20">ناشط حقوقي و فاعل سياسي، كاتب و موثّق للتاريخ السياسي المعاصر</p>
+          <a class="event" href="https://www.facebook.com/share/p/19VGNXd6QZ/" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/عزيز_الشابي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n1">عزيز الشابي</h3>
+          <p data-i18n="r1">باحث في العلوم القانونية و السياسية، عضو في حركة Stop Pollution</p>
+          <a class="event" href="https://www.facebook.com/photo.php?fbid=1414771387323102&amp;set=a.492184866248430&amp;type=3" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/صابر عمّار.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n2">صابر عمّار</h3>
+          <p data-i18n="r2">باحث و عضو في حركة Stop Pollution</p>
+          <a class="event" href="https://www.facebook.com/photo.php?fbid=1414771387323102&amp;set=a.492184866248430&amp;type=3" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/عبد السلام حيدوري.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n3">عبد السلام حيدوري</h3>
+          <p data-i18n="r3">باحث متخصص في الفلسفة الحديثة و المعاصرة</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=1182644683869108&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/بكار الغريب.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n4">بكار الغريب</h3>
+          <p data-i18n="r4">باحث جامعي</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=910174374449475&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo logo"><img src="images/OSAE.png" alt="OSAE" loading="lazy"></div>
+          <h3>OSAE</h3>
+          <p data-i18n="r5">المرصد التونسي للسيادة الغذائية و البيئية</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=900932752040304&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/غادة_الشلبي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n6">غادة الشلبي</h3>
+          <p data-i18n="r6">باحثة و ناشطة</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=839390511527862&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/فهمي_الرمضاني.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n7">فهمي الرمضاني</h3>
+          <p data-i18n="r7">أستاذ في التاريخ</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=839390511527862&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/نوفل حنفي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n8">نوفل حنفي</h3>
+          <p data-i18n="r8">باحث</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=401334191756373&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/يوسف_الصديق.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n9">يوسف الصديق</h3>
+          <p data-i18n="r9">فيلسوف و عالم أنثروبولوجيا</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=351598116729981&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/مراد_النجومي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n10">مراد النجومي</h3>
+          <p data-i18n="r10">باحث</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=330066552216471&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/كرّاي لعويشاوي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n11">كرّاي لعويشاوي</h3>
+          <p data-i18n="r11">أستاذ فلسفة</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=330066552216471&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/أم الزين بن شيخة.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n12">أم الزين بن شيخة</h3>
+          <p data-i18n="r12">باحثة متخصصة في الفلسفة</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=204934704729657&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/سعدية_مصباح.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n13">سعدية مصباح</h3>
+          <p data-i18n="r13">ناشطة حقوقية</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=201308871758907&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/عبد_الستار_السحباني.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n14">عبد الستار السحباني</h3>
+          <p data-i18n="r14">مختص في علم الإجتماع</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=201308871758907&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/مهدي سعيدان.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n15">مهدي سعيدان</h3>
+          <p data-i18n="r15">أستاذ فلسفة</p>
+          <a class="event" href="https://www.facebook.com/watch/?v=605957920803599" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/حياة الوسلاتي حمدي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="n16">حياة الوسلاتي حمدي</h3>
+          <p data-i18n="r16">رئيسة جمعيّة «أولاد أحمد تونس الشاعرة»</p>
+          <a class="event" href="https://www.facebook.com/permalink.php?story_fbid=189015816321546&amp;id=100063707634531" target="_blank" data-i18n="event">رابط الحدث ↗</a>
+        </div>
       </div>
     </div>
-
-
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/Café Culturel Biblio'Thé 3.webp" alt="زيارة تجريبية">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;">Café Culturel Biblio'Thé</div>
-        <div class="guest-description" style="color:#000000;">
-          <!-- optional description -->
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/p/Caf%C3%A9-Culturel-BiblioTh%C3%A9-100083575920187/?locale=fr_FR"
-          target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/Afterwork Coffeeshop.jpg" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;">Afterwork Coffeeshop</div>
-        <div class="guest-description" style="color:#000000;">
-          <!-- optional description -->
-        </div>
-      </div>
-
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/AfterWorkCoffeeShop/?locale=fr_FR" target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/Espace Culturel Aykart.jpg" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;">Espace Culturel Aykart</div>
-        <div class="guest-description" style="color:#000000;">
-          <!-- optional description -->
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/profile.php?id=100063634175450" target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/المدرسة الإعدادية النموذجية بمقرين.jpg" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;">المدرسة الإعدادية النموذجية بمقرين</div>
-        <div class="guest-description" style="color:#000000;">
-          <!-- optional description -->
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/CPMEGRINE/?locale=ar_AR" target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/دار الثقافة ابن خلدون.webp" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;"> دار الثقافة ابن خلدون</div>
-        <div class="guest-description" style="color:#000000;">
-          <!-- optional description -->
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/profile.php?id=100092297392349" target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/ISSTE Borj Cédria.webp" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;">المعهد العالي لعلوم وتكنولوجيات البيئة ببرج السدرية </div>
-        <div class="guest-description" style="color:#000000;">
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/HIESTBC/?locale=fr_FR" target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/المعهد العالي للعلوم الإنسانية بتونس (ابن شرف).jpg" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;"> المعهد العالي للعلوم الإنسانية بتونس (ابن شرف) </div>
-        <div class="guest-description" style="color:#000000;">
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://issht.rnu.tn/ar/accueil-ar/" target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
-    <!-- New Visit Card -->
-    <div class="guest-card">
-      <div class="guest-image-wrapper">
-        <img src="images/دار الثقافة باب العسل
-.jpg" alt="Afterwork Coffeeshop">
-      </div>
-      <div class="guest-text">
-        <div class="guest-name" style="color:#000000;"> دار الثقافة باب العسل
-        </div>
-        <div class="guest-description" style="color:#000000;">
-        </div>
-      </div>
-
-      <div class="guest-event">
-        <a href="https://www.facebook.com/p/%D8%AF%D8%A7%D8%B1-%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9-%D8%A7%D8%AD%D9%85%D8%AF-%D8%AE%D9%8A%D8%B1-%D8%A7%D9%84%D8%AF%D9%8A%D9%86-%D8%A8%D8%A8%D8%A7%D8%A8-%D8%A7%D9%84%D8%B9%D8%B3%D9%84-100076571979677/"
-          target="_blank">
-          🗺️ رابط المكان
-        </a>
-      </div>
-    </div>
-
   </section>
 
+  <!-- Visits -->
+  <section class="block" id="visits" style="padding-top:0; scroll-margin-top:72px">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="v.eyebrow">زياراتنا</span>
+          <h2 data-i18n="v.title">الفلسفة خارج القاعة</h2>
+        </div>
+        <p data-i18n="v.text">من كلية العلوم القانونية حيث وُلد النادي، إلى المقاهي الثقافية و دور الثقافة و المعاهد.</p>
+      </div>
+
+      <div class="visits">
+        <div class="visit reveal">
+          <div class="pic"><img src="images/كلية العلوم القانونية و السياسية و الاجتماعية بتونس.webp" alt="" loading="lazy"></div>
+          <div class="body">
+            <span class="tag" data-i18n="v.origin">منشأ النادي</span>
+            <h3 data-i18n="p1">كلية العلوم القانونية و السياسية و الاجتماعية بتونس</h3>
+            <a href="https://fsjpst.rnu.tn/ar/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/Café Culturel Biblio'Thé 3.webp" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3>Café Culturel Biblio'Thé</h3>
+            <a href="https://www.facebook.com/p/Caf%C3%A9-Culturel-BiblioTh%C3%A9-100083575920187/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/Afterwork Coffeeshop.jpg" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3>Afterwork Coffeeshop</h3>
+            <a href="https://www.facebook.com/AfterWorkCoffeeShop/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/Espace Culturel Aykart.jpg" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3>Espace Culturel Aykart</h3>
+            <a href="https://www.facebook.com/profile.php?id=100063634175450" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/المدرسة الإعدادية النموذجية بمقرين.jpg" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3 data-i18n="p5">المدرسة الإعدادية النموذجية بمقرين</h3>
+            <a href="https://www.facebook.com/CPMEGRINE/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/دار الثقافة ابن خلدون.webp" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3 data-i18n="p6">دار الثقافة ابن خلدون</h3>
+            <a href="https://www.facebook.com/profile.php?id=100092297392349" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/ISSTE Borj Cédria.webp" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3 data-i18n="p7">المعهد العالي لعلوم و تكنولوجيات البيئة ببرج السدرية</h3>
+            <a href="https://www.facebook.com/HIESTBC/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/المعهد العالي للعلوم الإنسانية بتونس (ابن شرف).jpg" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3 data-i18n="p8">المعهد العالي للعلوم الإنسانية بتونس (ابن شرف)</h3>
+            <a href="https://issht.rnu.tn/ar/accueil-ar/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+        <div class="visit reveal">
+          <div class="pic"><img src="images/دار الثقافة باب العسل.jpg" alt="" loading="lazy"></div>
+          <div class="body">
+            <h3 data-i18n="p9">دار الثقافة باب العسل</h3>
+            <a href="https://www.facebook.com/p/%D8%AF%D8%A7%D8%B1-%D8%A7%D9%84%D8%AB%D9%82%D8%A7%D9%81%D8%A9-%D8%A7%D8%AD%D9%85%D8%AF-%D8%AE%D9%8A%D8%B1-%D8%A7%D9%84%D8%AF%D9%8A%D9%86-%D8%A8%D8%A8%D8%A7%D8%A8-%D8%A7%D9%84%D8%B9%D8%B3%D9%84-100076571979677/" target="_blank" data-i18n="place">رابط المكان ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script>
-    const buttons = document.querySelectorAll(".filter-button");
-    const slider = document.querySelector(".filter-slider-rect");
-    const guestsSection = document.querySelector(".guests-section");
-    const visitsSection = document.querySelector(".visits-section");
-
-    function activate(btn) {
-      buttons.forEach(b => b.style.color = "#f57c00");
-
-      slider.style.transform = `translateX(${btn.dataset.translateValue})`;
-      slider.style.backgroundColor = btn.dataset.sliderColor;
-      document.body.style.backgroundColor = btn.dataset.bodyColor;
-      btn.style.color = btn.dataset.textColor;
-
-      if (btn.textContent.trim() === "الزيارات") {
-        guestsSection.classList.remove("visible");
-        guestsSection.classList.add("hidden");
-
-        visitsSection.classList.remove("hidden");
-        visitsSection.classList.add("visible");
-      } else {
-        visitsSection.classList.remove("visible");
-        visitsSection.classList.add("hidden");
-
-        guestsSection.classList.remove("hidden");
-        guestsSection.classList.add("visible");
+    window.PAGE_I18N = {
+      fr: {
+        "title": "Invités et visites - Club de philosophie Sophia",
+        "ph.eyebrow": "Invités et visites",
+        "ph.title": "Des voix <em>rencontrées</em>, des lieux visités",
+        "ph.text": "Les philosophes, chercheurs et militants reçus par le club, et les lieux culturels et éducatifs où nous avons porté le débat.",
+        "ph.guests": "Invités", "ph.visits": "Visites",
+        "g.eyebrow": "Nos invités", "g.title": "Les invités du club",
+        "event": "Voir l’événement ↗", "place": "Voir le lieu ↗",
+        "n1": "Aziz Chebbi", "r1": "Chercheur en sciences juridiques et politiques, membre du mouvement Stop Pollution",
+        "n2": "Saber Ammar", "r2": "Chercheur, membre du mouvement Stop Pollution",
+        "n3": "Abdessalem Hidouri", "r3": "Chercheur spécialisé en philosophie moderne et contemporaine",
+        "n4": "Baccar Gherib", "r4": "Universitaire",
+        "r5": "Observatoire tunisien de la souveraineté alimentaire et de l’environnement",
+        "n6": "Ghada Chelbi", "r6": "Chercheuse et militante",
+        "n7": "Fahmi Ramadhani", "r7": "Professeur d’histoire",
+        "n8": "Naoufel Hanafi", "r8": "Chercheur",
+        "n9": "Youssef Seddik", "r9": "Philosophe et anthropologue",
+        "n10": "Mourad Nejoumi", "r10": "Chercheur",
+        "n11": "Karray Laouichaoui", "r11": "Professeur de philosophie",
+        "n12": "Oum Ezzine Ben Cheikha", "r12": "Chercheuse spécialisée en philosophie",
+        "n13": "Saadia Mosbah", "r13": "Militante des droits humains",
+        "n14": "Abdessatar Sahbani", "r14": "Sociologue",
+        "n15": "Mehdi Saidane", "r15": "Professeur de philosophie",
+        "n16": "Hayet Ouesleti Hamdi", "r16": "Présidente de l’association «&nbsp;Ouled Ahmed – Tunis la poétesse&nbsp;»",
+        "n17": "Mouvement Stop Pollution", "r17": "Mouvement écologique et citoyen de la région de Gabès, qui revendique la justice environnementale et le droit à un environnement sain",
+        "n18": "El Kahf (Cave)", "r18": "Initiative culturelle et de jeunesse indépendante, espace de débat intellectuel et d’action culturelle et citoyenne",
+        "n19": "Rached Tamboura", "r19": "Étudiant en beaux-arts et graffeur, militant des droits humains et acteur de la société civile",
+        "n20": "Karim Abdessalem", "r20": "Militant des droits humains et acteur politique, auteur qui documente l’histoire politique contemporaine",
+        "v.eyebrow": "Nos visites", "v.title": "La philosophie hors les murs",
+        "v.text": "De la faculté de droit où le club est né, aux cafés culturels, aux maisons de la culture et aux instituts.",
+        "v.origin": "Berceau du club",
+        "p1": "Faculté des sciences juridiques, politiques et sociales de Tunis",
+        "p5": "Collège pilote de Mégrine",
+        "p6": "Maison de la culture Ibn Khaldoun",
+        "p7": "Institut supérieur des sciences et technologies de l’environnement de Borj Cédria",
+        "p8": "Institut supérieur des sciences humaines de Tunis (Ibn Charaf)",
+        "p9": "Maison de la culture Bab El Assal"
+      },
+      en: {
+        "title": "Guests & visits - Sophia Philosophy Club",
+        "ph.eyebrow": "Guests & visits",
+        "ph.title": "Voices we have <em>met</em>, places we have visited",
+        "ph.text": "The philosophers, researchers and activists the club has hosted, and the cultural and educational spaces where we took the debate.",
+        "ph.guests": "Guests", "ph.visits": "Visits",
+        "g.eyebrow": "Our guests", "g.title": "The club’s guests",
+        "event": "See the event ↗", "place": "See the place ↗",
+        "n1": "Aziz Chebbi", "r1": "Researcher in legal and political sciences, member of the Stop Pollution movement",
+        "n2": "Saber Ammar", "r2": "Researcher, member of the Stop Pollution movement",
+        "n3": "Abdessalem Hidouri", "r3": "Researcher in modern and contemporary philosophy",
+        "n4": "Baccar Gherib", "r4": "University researcher",
+        "r5": "Tunisian Observatory for Food Sovereignty and the Environment",
+        "n6": "Ghada Chelbi", "r6": "Researcher and activist",
+        "n7": "Fahmi Ramadhani", "r7": "History teacher",
+        "n8": "Naoufel Hanafi", "r8": "Researcher",
+        "n9": "Youssef Seddik", "r9": "Philosopher and anthropologist",
+        "n10": "Mourad Nejoumi", "r10": "Researcher",
+        "n11": "Karray Laouichaoui", "r11": "Philosophy teacher",
+        "n12": "Oum Ezzine Ben Cheikha", "r12": "Researcher in philosophy",
+        "n13": "Saadia Mosbah", "r13": "Human rights activist",
+        "n14": "Abdessatar Sahbani", "r14": "Sociologist",
+        "n15": "Mehdi Saidane", "r15": "Philosophy teacher",
+        "n16": "Hayet Ouesleti Hamdi", "r16": "President of the “Ouled Ahmed – Tunisia the Poet” association",
+        "n17": "Stop Pollution movement", "r17": "Environmental and civic movement from the Gabès region, campaigning for environmental justice and the right to a healthy environment",
+        "n18": "El Kahf (Cave)", "r18": "Independent youth and cultural initiative, a space for intellectual debate and cultural and civic action",
+        "n19": "Rached Tamboura", "r19": "Fine arts student and graffiti artist, human rights activist and civil society actor",
+        "n20": "Karim Abdessalem", "r20": "Human rights activist and political actor, writer documenting contemporary political history",
+        "v.eyebrow": "Our visits", "v.title": "Philosophy beyond the classroom",
+        "v.text": "From the law faculty where the club was born, to cultural cafés, culture houses and institutes.",
+        "v.origin": "Where it all began",
+        "p1": "Faculty of Legal, Political and Social Sciences of Tunis",
+        "p5": "Megrine Pilot Middle School",
+        "p6": "Ibn Khaldoun House of Culture",
+        "p7": "Higher Institute of Environmental Sciences and Technologies, Borj Cédria",
+        "p8": "Higher Institute of Human Sciences of Tunis (Ibn Charaf)",
+        "p9": "Bab El Assal House of Culture"
       }
-    }
-
-    buttons.forEach(btn => btn.addEventListener("click", () => activate(btn)));
-
-    // default
-    activate(buttons[0]);
-
-
+    };
   </script>
-
-
+  <script src="js/site.js"></script>
 </body>
 
 </html>

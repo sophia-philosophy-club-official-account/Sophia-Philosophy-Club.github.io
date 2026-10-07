@@ -1,886 +1,156 @@
-<!-- Credits: -->
-<!-- "Confetti button" by Mikael Ainalem on CodePen: https://codepen.io/ainalem/pen/zXoEmx -->
-
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 
 <head>
   <meta charset="UTF-8">
-  <title>فيديوهات و وسائط نادي صوفيا للفلسفة</title>
-  <!-- Open Graph meta tags for Messenger / social preview -->
-  <meta property="og:title" content="نادي صوفيا للفلسفة">
-  <meta property="og:description" content="مرحبا بكم في نادي صوفيا للفلسفة">
-  <meta property="og:image"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-  <meta property="og:type" content="website">
-  <meta property="og:url"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/videos.html">
-
-  <!-- Twitter card (optional) -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:title" content="نادي صوفيا للفلسفة">
-  <meta name="twitter:description" content="مرحبا بكم في نادي صوفيا للفلسفة">
-  <meta name="twitter:image"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-
-  <link rel="icon" type="image/jpeg"
-    href="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    @font-face {
-      font-family: 'Taro';
-      src: url('fonts/alfont_com_taro.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
+  <title>الفيديوهات و الوسائط - نادي صوفيا للفلسفة</title>
 
-    /* Prevent horizontal scroll */
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      font-family: "Arial", sans-serif;
-      background-color: #000000;
-      color: #FFD120;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
+  <meta property="og:title" content="الفيديوهات و الوسائط - نادي صوفيا للفلسفة">
+  <meta property="og:description" content="مقالات صوتية و تسجيلات من لقاءات نادي صوفيا">
+  <meta property="og:image" content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
+  <meta property="og:url" content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/videos.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/jpeg" href="images/sophia.jpg">
 
-    header {
-      width: 100%;
-      padding: 20px;
-      text-align: center;
-      background-color: #000000;
-      font-size: 24px;
-      font-weight: bold;
-
-      /* Apply Taro font */
-      font-family: 'Taro', Arial, sans-serif;
-    }
-
-    /* Temporary notice box */
-    .video-notice {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background: rgba(255, 209, 32, 0.9);
-      color: #222;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 8px 12px;
-      border-radius: 5px;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Container for all posts/videos */
-    .fb-posts-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin: 40px 0;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0 10px;
-    }
-
-    /* White wrapper */
-    .fb-post-wrapper {
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-      width: 100%;
-      max-width: 580px;
-      box-sizing: border-box;
-    }
-
-    /* Make iframe/video fill wrapper */
-    .fb-post-wrapper iframe,
-    .fb-post-wrapper video {
-      width: 100%;
-      height: auto;
-      min-height: 70vh;
-      border-radius: 5px;
-      pointer-events: auto;
-      touch-action: pan-y;
-      display: block;
-      max-width: 100%;
-    }
-
-    /* Video description */
-    .video-description {
-      margin: 12px auto 0 auto;
-      background: #f7f7f7;
-      padding: 12px;
-      border-radius: 5px;
-      line-height: 1.6;
-      font-size: 16px;
-      color: #000;
-      text-align: right;
-      width: 95%;
-      max-width: 95%;
-      box-sizing: border-box;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(60, 60, 60, 0.6);
-      color: #FFD120;
-      font-size: clamp(12px, 1.5vw, 18px);
-      line-height: 1.6;
-      padding: clamp(10px, 1.5vh, 15px) 0;
-      display: flex;
-      justify-content: center;
-      gap: clamp(10px, 4vw, 40px);
-      z-index: 20;
-      backdrop-filter: blur(5px);
-    }
-
-    footer a {
-      color: #FFD120;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: #ffffff;
-    }
-
-    footer a.arabic {
-      font-family: 'Taro', Arial, sans-serif;
-    }
-
-    /* ===== Canvas Button (isolated) ===== */
-    .canvas-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 999;
-      transform: scale(0.7);
-      transform-origin: top right;
-      background-color: rgba(255, 209, 32, 0.7);
-      padding: 1px;
-      /* controls size of the yellow background */
-      border-radius: 50%;
-      /* keeps it circular */
-    }
-
-    /* Button visuals */
-    .hover {
-      border-radius: 50px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
-        0 3px 6px rgba(0, 0, 0, 0.23);
-      cursor: pointer;
-      height: 100px;
-      width: 100px;
-      position: relative;
-    }
-
-    .shadow {
-      position: absolute;
-      margin-top: 2px;
-    }
-
-    .hover svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .clip {
-      background-color: #e0e0e0;
-      border-radius: 50px;
-      height: 100px;
-      width: 100px;
-      position: absolute;
-      clip-path: polygon(0% 0%, 0% 52.447069%, 30.844539% 52.447%, 30.844539% 50.237396%,
-          30.844539% 48.027791%, 30.844539% 45.818186%, 30.844539% 43.608582%,
-          31.074905% 42.257032%, 31.65035% 40.866508%, 32.397397% 39.609496%,
-          33.142567% 38.658487%, 35.677378% 36.327021%, 39.127089% 33.663669%,
-          43.075878% 30.89027%, 47.107926% 28.228662%, 48.519882% 27.751201%,
-          50.433213% 27.58916%, 52.319085% 27.746871%, 53.648664% 28.228662%,
-          57.127578% 30.883904%, 60.932631% 33.942292%, 64.454458% 36.928097%,
-          67.083693% 39.365593%, 67.93372% 40.373944%, 68.477633% 41.419308%,
-          68.766519% 42.631058%, 68.851461% 44.138564%, 68.851461% 48.469673%,
-          68.851461% 52.800782%, 68.851461% 57.131891%, 68.851461% 61.463%,
-          68.394148% 63.593607%, 67.234211% 65.271838%, 65.689655% 66.371396%,
-          64.078489% 66.765981%, 62.752664% 66.765981%, 61.426839% 66.765981%,
-          60.101013% 66.765981%, 58.775188% 66.765981%, 57.551799% 66.396236%,
-          56.538683% 65.455904%, 55.848324% 64.198338%, 55.593208% 62.876894%,
-          55.593208% 61.595263%, 55.593208% 60.313632%, 55.593208% 59.032001%,
-          55.593208% 57.75037%, 55.372582% 56.844737%, 54.769169% 56.243166%,
-          53.870669% 55.909062%, 52.764781% 55.805826%, 51.262179% 55.805826%,
-          49.759577% 55.805826%, 48.256975% 55.805826%, 46.754373% 55.805826%,
-          45.512872% 56.016456%, 44.683926% 56.588476%, 44.22729% 57.432085%,
-          44.102723% 58.457477%, 44.119797% 59.641849%, 44.1179% 60.911742%,
-          44.108414% 62.368716%, 44.102723% 64.114331%, 43.898513% 65.255375%,
-          43.351924% 66.213805%, 42.562016% 66.873799%, 41.627849% 67.119535%,
-          40.257829% 67.119535%, 38.88781% 67.119535%, 37.517791% 67.119535%,
-          36.147771% 67.119535%, 34.388618% 66.605533%, 32.669023% 65.277485%,
-          31.362995% 63.456329%, 30.844539% 61.463%, 30.844539% 59.209%,
-          30.844539% 56.955%, 30.844539% 54.701%, 30.844539% 52.447%, 0% 52.447%,
-          0% 100%, 100% 100%, 100% 0%);
-    }
-
-    .hover:hover .clip {
-      background-color: #f8f8f8;
-    }
-
-    .hover:active {
-      transform: translateY(2px);
-    }
-
-    /* Canvas container */
-    .container {
-      clip-path: circle(40px at 45px 50%);
-      height: 90px;
-      width: 90px;
-      overflow: hidden;
-      position: absolute;
-      top: 5px;
-      left: 5px;
-    }
-
-    #canvas {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Remove the blue outline when clicking/tapping */
-    a,
-    button {
-      outline: none;
-      /* remove default outline */
-      -webkit-tap-highlight-color: transparent;
-      /* remove tap highlight on mobile */
-    }
-
-    /* Optional: remove focus shadow on your hover div */
-    .hover:focus,
-    .hover:active {
-      outline: none;
-      box-shadow: none;
-    }
-
-    /* Tablets */
-    @media screen and (max-width: 900px) {
-      .canvas-button {
-        transform: scale(0.6);
-        padding: 0.5px;
-        top: 70px;
-        right: 15px;
-      }
-
-      .hover {
-        width: 80px;
-        height: 80px;
-      }
-
-      .clip {
-        width: 80px;
-        height: 80px;
-      }
-
-      .fb-post-wrapper {
-        max-width: 90%;
-      }
-
-      .fb-post-wrapper iframe,
-      .fb-post-wrapper video {
-        min-height: 45vh;
-      }
-
-    }
-
-    /* Mobile */
-    @media screen and (max-width: 600px) {
-      .canvas-button {
-        transform: scale(0.5);
-        padding: 1px;
-        top: 70px;
-        right: 10px;
-      }
-
-      .clip {
-        width: 80px;
-        height: 80px;
-      }
-
-      .fb-posts-container {
-        flex-direction: column;
-        align-items: center;
-        padding: 0 5px;
-      }
-
-      .fb-post-wrapper {
-        width: 95vw;
-        max-width: 95vw;
-      }
-
-      .fb-post-wrapper iframe,
-      .fb-post-wrapper video {
-        width: 100%;
-        height: auto;
-        min-height: 50vh;
-      }
-
-      .video-description {
-        width: 90%;
-        max-width: 90%;
-        font-size: 15px;
-      }
-
-
-
-      footer {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        column-gap: clamp(6px, 2vw, 12px);
-        row-gap: 4px;
-        align-items: start;
-        text-align: left;
-        font-size: 11px;
-        padding: 5px 10px;
-      }
-
-
-
-      footer img {
-        width: 14px !important;
-        height: auto;
-        vertical-align: middle;
-        margin-right: 5px;
-        margin-left: 5px;
-
-      }
-
-      .video-notice {
-        font-size: 12px;
-        padding: 6px 10px;
-      }
-    }
-
-    .arabic {
-      font-family: 'Taro', Arial, sans-serif;
-    }
-
-
-
-
-    @media screen and (max-height: 479px) {
-
-
-      footer {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        column-gap: clamp(6px, 2vw, 12px);
-        row-gap: 4px;
-        align-items: start;
-        text-align: left;
-        font-size: 11px;
-        padding: 5px 10px;
-      }
-
-
-      footer img {
-        width: 14px !important;
-        height: auto;
-        vertical-align: middle;
-        margin-right: 5px;
-        margin-left: 5px;
-
-      }
-
-    }
-  </style>
+  <script>try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("sophia-lang"); if (l === "fr" || l === "en") { document.documentElement.lang = l; document.documentElement.dir = "ltr"; document.documentElement.className = "i18n-wait"; setTimeout(function () { document.documentElement.classList.remove("i18n-wait"); }, 1500); } } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Josefin+Sans:wght@300;400&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
 </head>
 
-<body>
+<body data-page="videos">
 
-  <div class="canvas-button">
-    <div class="container">
-      <canvas id="canvas"></canvas>
-    </div>
-    <a href="home.html" id="confetti-link">
-      <div class="hover">
-        <svg class="shadow" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-          <defs>
-            <filter id="a" x="-.024" width="1.048" y="-.024" height="1.048">
-              <feGaussianBlur stdDeviation="1" />
-            </filter>
-          </defs>
-          <path d="M20 20v32.36h10.845v-8.837c0-1.7 1.383-3.963
-  2.298-4.95
-  2.585-2.79 8.72-7.055 13.965-10.43 1.314-.845 5.374-.86
-  6.54
-  0 4.15 3.06 10.796 8.464 13.436 11.137 1.36 1.377 1.768
-  2.508 1.768 4.773v17.324c0 3.086-2.722 5.303-4.773
-  5.303h-5.304c-1.722
-  0-3.182-2.197-3.182-3.89v-5.126c0-1.426-1.255-1.944-2.83-1.944h-6.01c-1.947
-  0-2.688 1.203-2.65 2.65.04 1.57 0 3.093 0 5.658 0
-  1.592-1.178 3.006-2.476 3.006h-5.48c-2.205
-  0-5.157-3.03-5.303-5.657V52.36H20V80h60V20z" fill="#9eabb0" fill-rule="evenodd" stroke="#9eabb0" filter="url(#a)" />
-        </svg>
-        <div class="clip"></div>
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <span class="eyebrow" data-i18n="ph.eyebrow">الفيديوهات و الوسائط</span>
+      <h1 data-i18n="ph.title">الفلسفة <em>بالصوت و الصورة</em></h1>
+      <p data-i18n="ph.text">مقالات صوتية من إنتاج النادي، و تسجيلات من لقاءاتنا و نقاشاتنا.</p>
+      <div class="actions">
+        <a href="https://www.youtube.com/@sophiaclub2020" target="_blank" class="btn btn-ghost" data-i18n="ph.yt">قناتنا على يوتيوب</a>
       </div>
-    </a>
-  </div>
+    </div>
+  </section>
+
+  <!-- Our own videos -->
+  <section class="block">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="v.eyebrow">من إنتاج النادي</span>
+          <h2 data-i18n="v.title">مقالات صوتية و عروض</h2>
+        </div>
+      </div>
+      <div class="videos">
+        <div class="vcard reveal">
+          <video controls preload="metadata"><source src="videos/لغة_الضاد.mp4" type="video/mp4"></video>
+          <div class="body">
+            <h3 data-i18n="v1">لغة الضاد: مقال صوتي 🎙️</h3>
+            <a href="https://www.facebook.com/share/v/1BgMaE6MXj/" target="_blank" data-i18n="v.fb">على فيسبوك ↗</a>
+          </div>
+        </div>
+        <div class="vcard reveal">
+          <video controls preload="metadata"><source src="videos/أحداث 9 أفريل 1938.mp4" type="video/mp4"></video>
+          <div class="body">
+            <h3 data-i18n="v2">أحداث 9 أفريل 1938 🎙️</h3>
+            <a href="https://www.youtube.com/watch?v=Q6R7kAESRgk" target="_blank" data-i18n="v.yt">على يوتيوب ↗</a>
+          </div>
+        </div>
+        <div class="vcard reveal">
+          <video controls preload="metadata"><source src="videos/Love in the Age of Capitalism.mp4" type="video/mp4"></video>
+          <div class="body">
+            <h3 data-i18n="v3">الحب في عصر الرأسمالية ❤️</h3>
+            <a href="https://www.instagram.com/reel/DGEQ6M0oJwb/" target="_blank" data-i18n="v.ig">على انستغرام ↗</a>
+          </div>
+        </div>
+        <div class="vcard reveal">
+          <video controls preload="metadata"><source src="videos/عرض فيلم فلسطين في العين.mp4" type="video/mp4"></video>
+          <div class="body">
+            <h3 data-i18n="v5">عرض فيلم «فلسطين في العين» 👁️</h3>
+            <a href="https://www.instagram.com/reel/C3LvKn9Ibkt/" target="_blank" data-i18n="v.ig">على انستغرام ↗</a>
+          </div>
+        </div>
+        <div class="vcard reveal">
+          <video controls preload="metadata"><source src="videos/Are we truly free .mp4" type="video/mp4"></video>
+          <div class="body">
+            <h3 data-i18n="v4">هل نحن فعلا أحرار؟ 🕊️</h3>
+            <a href="https://www.instagram.com/reel/Co7llumIJSJ/" target="_blank" data-i18n="v.ig">على انستغرام ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- From our Facebook page -->
+  <section class="block" style="padding-block:0">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="fb.eyebrow">من صفحتنا على فيسبوك</span>
+          <h2 data-i18n="fb.title">تسجيلات لقاءاتنا</h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <!-- Each line below is one Facebook post. To add a new one, copy a line and paste the new link. -->
+      <div class="posts">
+        <div class="post" data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid09jP9Z8LyuEsguPuW89ubXvXEmPhhcpaxBum3AySRF6K7DJ32zv25JCVChQSkvi2fl%26id%3D100063707634531&amp;show_text=true"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F100063707634531%2Fvideos%2F598539396460190%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post" data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02hJzBAoaJ514vXjbeokMXPmwXZuEvLDo6bjaSC8883taP9XinGWCPUCCRNpDeUwd7l%26id%3D100063707634531&amp;show_text=true"></div>
+        <div class="post" data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0wgv7AqGcNZZZAMhCD97ZDs3CZCGmr4vX8c4JArSUbYpQZgdApyqCdxjv4QdMkAGVl%26id%3D100063707634531&amp;show_text=true"></div>
+        <div class="post" data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02FxUP97i3QsAyQYPYvq7VYi7srB5tX8mxjKfMe4CcuHr7YQKzhU9kaHCcvoZpnuUCl%26id%3D100063707634531&amp;show_text=true"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F202397041469733%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F772351333419538%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F487658372666010%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F605957920803599%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F1097219217418881%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F1792234690937602%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F149723097014260%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+        <div class="post short" data-src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F1270364533357611%2F&amp;show_text=true&amp;width=560&amp;t=0"></div>
+      </div>
+    </div>
+  </section>
 
   <script>
-    const canvas = document.querySelector("#canvas");
-    const ctx = canvas.getContext("2d");
-    const container = document.querySelector(".container");
-    const link = document.querySelector("#confetti-link");
-
-    const config = { particleNumber: 300, maxParticleSize: 6, maxSpeed: 6, colorVariation: 40 };
-
-    function adjustConfigForScreen() {
-      if (window.innerWidth <= 600) {
-        config.maxParticleSize = 3; config.maxSpeed = 3; config.particleNumber = 150;
-      } else if (window.innerWidth <= 900) {
-        config.maxParticleSize = 4; config.maxSpeed = 4; config.particleNumber = 200;
-      } else {
-        config.maxParticleSize = 6; config.maxSpeed = 6; config.particleNumber = 300;
+    window.PAGE_I18N = {
+      fr: {
+        "title": "Vidéos et médias - Club de philosophie Sophia",
+        "ph.eyebrow": "Vidéos et médias",
+        "ph.title": "La philosophie <em>en son et en images</em>",
+        "ph.text": "Des articles audio produits par le club, et des enregistrements de nos rencontres et de nos débats.",
+        "ph.yt": "Notre chaîne YouTube",
+        "v.eyebrow": "Produit par le club", "v.title": "Articles audio et projections",
+        "v1": "La langue du Dad&nbsp;: article audio 🎙️",
+        "v2": "Les événements du 9 avril 1938 🎙️",
+        "v3": "L’amour à l’ère du capitalisme ❤️",
+        "v4": "Sommes-nous vraiment libres&nbsp;? 🕊️",
+        "v5": "Projection du film «&nbsp;Palestine dans l’œil&nbsp;» 👁️",
+        "v.fb": "Sur Facebook ↗", "v.yt": "Sur YouTube ↗", "v.ig": "Sur Instagram ↗",
+        "fb.eyebrow": "Sur notre page Facebook", "fb.title": "Enregistrements de nos rencontres"
+      },
+      en: {
+        "title": "Videos & media - Sophia Philosophy Club",
+        "ph.eyebrow": "Videos & media",
+        "ph.title": "Philosophy <em>in sound and image</em>",
+        "ph.text": "Audio essays produced by the club, and recordings of our meetings and debates.",
+        "ph.yt": "Our YouTube channel",
+        "v.eyebrow": "Made by the club", "v.title": "Audio essays & screenings",
+        "v1": "The Language of Dad: an audio essay 🎙️",
+        "v2": "The events of 9 April 1938 🎙️",
+        "v3": "Love in the Age of Capitalism ❤️",
+        "v4": "Are we truly free? 🕊️",
+        "v5": "Screening of the film “Palestine in the Eye” 👁️",
+        "v.fb": "On Facebook ↗", "v.yt": "On YouTube ↗", "v.ig": "On Instagram ↗",
+        "fb.eyebrow": "From our Facebook page", "fb.title": "Recordings of our meetings"
       }
-    }
-    adjustConfigForScreen();
-    window.addEventListener("resize", adjustConfigForScreen);
-
-    const colors = [
-      { r: 255, g: 209, b: 32 },
-      { r: 255, g: 223, b: 70 },
-      { r: 255, g: 215, b: 0 },
-      { r: 255, g: 230, b: 100 }
-    ];
-
-    let particles = [];
-    function randomColor() { const c = colors[Math.floor(Math.random() * colors.length)]; return `rgba(${c.r},${c.g},${c.b},0.8)`; }
-    function Particle(x, y) { this.x = x; this.y = y; this.r = Math.random() * config.maxParticleSize; this.vx = (Math.random() - 0.5) * config.maxSpeed; this.vy = (Math.random() - 0.5) * config.maxSpeed; this.c = randomColor(); }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const radius = Math.min(canvas.width, canvas.height) / 2;
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        const dx = p.x - canvas.width / 2; const dy = p.y - canvas.height / 2;
-        if (dx * dx + dy * dy > radius * radius) { p.x -= p.vx; p.y -= p.vy; p.vx *= -0.5; p.vy *= -0.5; }
-        ctx.beginPath(); ctx.fillStyle = p.c; ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
-      });
-    }
-
-    function resizeCanvas() {
-      const rect = container.getBoundingClientRect();
-      const padding = 6;
-      canvas.width = rect.width + padding * 2;
-      canvas.height = rect.height + padding * 2;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    link.addEventListener("click", e => {
-      e.preventDefault(); // stop immediate navigation
-
-      particles = [];
-      const rect = canvas.getBoundingClientRect();
-      const centerX = rect.width / 2, centerY = rect.height / 2;
-      for (let i = 0; i < config.particleNumber; i++) particles.push(new Particle(centerX, centerY));
-
-      let i = 0;
-      const anim = setInterval(() => {
-        draw();
-        if (i++ > 30) clearInterval(anim);
-      }, 16);
-
-      // Delay navigation by 1 second
-      setTimeout(() => { window.location.href = link.href; }, 1000);
-    });
+    };
   </script>
-  <!-- Temporary notice with reload button -->
-  <div class="video-notice">
-    إذا لم يبدأ الفيديو عند الضغط عليه، حاول إعادة تحميل الصفحة
-    <button onclick="location.reload();" class="reload-btn"> زر إعادة التحميل </button>
-  </div>
-
-  <style>
-    .video-notice {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background: rgba(255, 0, 0, 0.95);
-      color: #222;
-      font-size: 14px;
-      font-weight: bold;
-      padding: 8px 12px;
-      border-radius: 5px;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .video-notice .reload-btn {
-      background: #222;
-      color: #ff0000;
-      border: none;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .video-notice .reload-btn:hover {
-      background: #444;
-    }
-
-    /* Mobile only */
-    @media (max-width: 768px) {
-      .video-notice {
-        top: 0vh;
-        /* keep your good position */
-        left: 0;
-        width: 100vw;
-        /* full screen width */
-        max-width: 100vw;
-        box-sizing: border-box;
-
-        padding-left: 4vw;
-        padding-right: 4vw;
-
-        transform: none;
-      }
-    }
-
-    /* Adjust footer dynamically for short screens */
-    @media screen and (max-height: 600px) {
-      footer {
-        font-size: clamp(12px, 2vw, 14px);
-        /* smaller text on short screens */
-        padding: clamp(4px, 1.5vh, 6px) 0;
-        /* reduce vertical padding */
-        gap: clamp(2px, 1vw, 6px);
-        /* reduce space between items */
-      }
-
-      footer img {
-        width: clamp(14px, 3vw, 18px);
-        /* scale icons smaller */
-      }
-    }
-
-    /* Adjust footer dynamically for very short screens */
-    @media screen and (max-height: 400px) {
-      footer {
-        font-size: clamp(10px, 1.5vw, 12px);
-        /* even smaller text */
-        padding: clamp(2px, 1vh, 4px) 0;
-        /* minimal vertical padding */
-        gap: clamp(1px, 0.5vw, 3px);
-        /* minimal spacing */
-      }
-
-      footer img {
-        width: clamp(12px, 2.5vw, 14px);
-        /* smaller icons */
-      }
-    }
-  </style>
-
-  <header>فيديوهات و وسائط نادي صوفيا للفلسفة</header>
-  <div class="fb-posts-container"> <!-- First video (Facebook) -->
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid09jP9Z8LyuEsguPuW89ubXvXEmPhhcpaxBum3AySRF6K7DJ32zv25JCVChQSkvi2fl%26id%3D100063707634531&show_text=true"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-    <!-- First video (Facebook) -->
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F100063707634531%2Fvideos%2F598539396460190%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <!-- Second video (local MP4) -->
-    <div class="fb-post-wrapper">
-      <video controls>
-        <source src="videos/لغة_الضاد.mp4" type="video/mp4">
-        متصفحك لا يدعم عرض الفيديو.
-      </video>
-      <div class="video-description">
-        <strong>لغة الضاد : مقال صوتي 🎙️</strong>
-      </div>
-      <div style="margin-top:10px; text-align:center;">
-        <a href="https://www.facebook.com/share/v/1BgMaE6MXj/" target="_blank">
-          رابط المنشور على فيسبوك
-        </a>
-      </div>
-    </div>
-
-    <!-- Third video (local MP4) -->
-    <div class="fb-post-wrapper">
-      <video controls>
-        <source src="videos/أحداث 9 أفريل 1938.mp4" type="video/mp4">
-        متصفحك لا يدعم عرض الفيديو.
-      </video>
-      <div class="video-description">
-        <strong>أحداث 9 أفريل 1938 🎙️</strong>
-      </div>
-      <div style="margin-top:10px; text-align:center;">
-        <a href="https://www.youtube.com/watch?v=Q6R7kAESRgk&t" target="_blank">
-          رابط المنشور على اليوتوب
-        </a>
-      </div>
-    </div>
-
-
-    <!-- Fourth video (local MP4) -->
-    <div class="fb-post-wrapper">
-      <video controls>
-        <source src="videos/Love in the Age of Capitalism.mp4" type="video/mp4">
-        متصفحك لا يدعم عرض الفيديو.
-      </video>
-      <div class="video-description">
-        <strong>الحب في عصر الرأسمالية ❤️</strong>
-      </div>
-      <div style="margin-top:10px; text-align:center;">
-        <a href="https://www.instagram.com/reel/DGEQ6M0oJwb/" target="_blank">
-          رابط المنشور على إنستغرام
-        </a>
-      </div>
-    </div>
-
-    <!-- Video (local MP4) -->
-    <div class="fb-post-wrapper">
-      <video controls>
-        <source src="videos/عرض فيلم فلسطين في العين.mp4" type="video/mp4">
-        متصفحك لا يدعم عرض الفيديو.
-      </video>
-      <div class="video-description">
-        عرض فيلم فلسطين في العين 👁️
-      </div>
-      <div style="margin-top:10px; text-align:center;">
-        <a href="https://www.instagram.com/reel/C3LvKn9Ibkt/" target="_blank">
-          رابط المنشور على إنستغرام
-        </a>
-      </div>
-    </div>
-
-    <!-- Fifth video (local MP4) -->
-    <div class="fb-post-wrapper">
-      <video controls>
-        <source src="videos/Are we truly free .mp4" type="video/mp4">
-        متصفحك لا يدعم عرض الفيديو.
-      </video>
-      <div class="video-description">
-        هل نحن فعلا أحرار؟🕊️
-      </div>
-      <div style="margin-top:10px; text-align:center;">
-        <a href="https://www.instagram.com/reel/Co7llumIJSJ/" target="_blank">
-          رابط المنشور على إنستغرام
-        </a>
-      </div>
-    </div>
-
-
-    <!-- Facebook post iframes -->
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02hJzBAoaJ514vXjbeokMXPmwXZuEvLDo6bjaSC8883taP9XinGWCPUCCRNpDeUwd7l%26id%3D100063707634531&show_text=true"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0wgv7AqGcNZZZAMhCD97ZDs3CZCGmr4vX8c4JArSUbYpQZgdApyqCdxjv4QdMkAGVl%26id%3D100063707634531&show_text=true"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02FxUP97i3QsAyQYPYvq7VYi7srB5tX8mxjKfMe4CcuHr7YQKzhU9kaHCcvoZpnuUCl%26id%3D100063707634531&show_text=true"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F202397041469733%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F772351333419538%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F487658372666010%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F605957920803599%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F1097219217418881%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F1792234690937602%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F149723097014260%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-    <div class="fb-post-wrapper">
-      <iframe
-        data-src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2F103356968220765%2Fvideos%2F1270364533357611%2F&show_text=true&width=560&t=0"
-        style="border:none; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-      </iframe>
-    </div>
-
-
-
-  </div> <!-- Footer Bar -->
-
-  <!-- Footer Bar -->
-  <footer>
-    <span>
-      <img src="images/mail.png" alt="Email" style="width:20px; vertical-align:middle; margin-right:5px;">
-      <a href="mailto:sophia.club2020@gmail.com">sophia.club2020@gmail.com</a>
-    </span>
-
-    <span>
-      <img src="images/facebook.png" alt="Facebook" style="width:26px; vertical-align:middle; margin-right:5px;">
-      <a href="https://www.facebook.com/profile.php?id=100063707634531" target="_blank" class="arabic">صفحة فيسبوك</a>
-    </span>
-
-    <span>
-      <img src="images/instagram.png" alt="Instagram" style="width:28px; vertical-align:middle; margin-right:5px;">
-      <a href="https://www.instagram.com/sophiaphilosophy/?hl=fr" target="_blank" class="arabic">صفحة انستغرام</a>
-    </span>
-
-    <span>
-      <img src="images/youtube.png" alt="Youtube" style="width:28px; vertical-align:middle; margin-right:5px;">
-      <a href="https://www.youtube.com/@sophiaclub2020" target="_blank" class="arabic">صفحة اليوتوب</a>
-    </span>
-
-    <span>
-      <img src="images/medium.png" alt="medium" style="width:28px; vertical-align:middle; margin-right:5px;">
-      <a href="https://medium.com/@sophia.club2020" target="_blank" class="arabic">Medium</a>
-    </span>
-
-  </footer>
-
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const wrappers = document.querySelectorAll(".fb-post-wrapper");
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const wrapper = entry.target;
-          let iframe = wrapper.querySelector("iframe");
-
-          if (!iframe) return;
-
-          if (entry.isIntersecting) {
-            // LOAD iframe
-            if (!iframe.src) {
-              iframe.src = iframe.dataset.src;
-            }
-          } else {
-            // UNLOAD iframe by replacing it with a fresh iframe
-            if (iframe.src) {
-              const newIframe = document.createElement("iframe");
-              newIframe.dataset.src = iframe.dataset.src;
-              newIframe.width = iframe.width;
-              newIframe.height = iframe.height;
-              newIframe.style = iframe.style.cssText;
-              newIframe.scrolling = iframe.scrolling;
-              newIframe.frameBorder = iframe.frameBorder;
-              newIframe.allowFullscreen = true;
-              newIframe.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share");
-
-              // Replace old iframe
-              iframe.replaceWith(newIframe);
-            }
-          }
-        });
-      }, {
-        rootMargin: "200px 0px",
-        threshold: 0.1
-      });
-
-      wrappers.forEach(wrapper => {
-        observer.observe(wrapper);
-
-        // Interaction on mobile
-        wrapper.addEventListener("touchstart", () => {
-          wrapper.classList.add("active");
-        });
-
-        // Interaction on desktop
-        wrapper.addEventListener("click", () => {
-          wrapper.classList.add("active");
-        });
-      });
-    });
-  </script>
-
-
+  <script src="js/site.js"></script>
 </body>
 
 </html>

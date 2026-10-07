@@ -1,992 +1,288 @@
-<!-- Credits: -->
-<!-- "Space Elevator" by Eslam Yahya on CodePen: https://codepen.io/Eslam-Yahya/pen/MvKZKj -->
-<!-- "Glowing Buttons" by Pranjal Bhadu on CodePen: https://codepen.io/bhadupranjal/pen/vYLZYqQ -->
-
-
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نادي صوفيا للفلسفة</title>
 
-  <title>نادي صوفيا للفلسفة - الصفحة الرئيسية</title>
-  <!-- Open Graph / Messenger / WhatsApp -->
   <meta property="og:title" content="نادي صوفيا للفلسفة">
-  <meta property="og:description" content="مرحبا بكم في نادي صوفيا للفلسفة">
-  <meta property="og:image"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
+  <meta property="og:description" content="الفلسفة ليست تأملا في العالم بل أداة لفهم شروط تغييره">
+  <meta property="og:image" content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
+  <meta property="og:url" content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/home.html">
   <meta property="og:type" content="website">
-  <meta property="og:url"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/home.html">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:title" content="نادي صوفيا للفلسفة">
-  <meta name="twitter:description" content="مرحبا بكم في نادي صوفيا للفلسفة">
-  <meta name="twitter:image"
-    content="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-
-
-  <link rel="icon" type="image/jpeg"
-    href="https://sophia-philosophy-club-official-account.github.io/Sophia-Philosophy-Club.github.io/images/sophia.jpg">
-
-  <!-- GSAP -->
-  <script src="js/gsap.min.js"></script>
-  <style>
-    @font-face {
-      font-family: 'Taro';
-      src: url('fonts/alfont_com_taro.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-
-
-    /* --- GLOBAL STYLES --- */
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #000000;
-      font-family: "Arial", sans-serif;
-      color: #FFD120;
-      text-align: center;
-      position: relative;
-      font-size: clamp(14px, 1.4vw, 18px);
-    }
-
-    /* --- TOP LEFT BUG / DEBUG BOX --- */
-    #top-left-bug {
-      top: clamp(0.6vh, 1vh, 1.5vh);
-      left: clamp(0.6vw, 1vw, 1.5vw);
-      font-size: clamp(11px, 1.2vw, 14px);
-      gap: clamp(4px, 0.8vw, 6px);
-    }
-
-    #bug-msg {
-      font-size: clamp(10px, 1.1vw, 12px);
-      font-family: 'Taro', Arial, sans-serif;
-      /* Apply Taro font */
-    }
-
-
-    /* --- SPEECH BUBBLES (DYNAMIC) --- */
-    .speech-bubble {
-      position: relative;
-      background: #222222;
-      color: #FFD120;
-
-      padding: clamp(4px, 1vh, 8px) clamp(8px, 2vw, 14px);
-
-      border-radius: clamp(8px, 1.5vw, 14px);
-
-      font-size: clamp(12px, 1.6vw, 15px);
-
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    .speech-bubble::after {
-      content: '';
-      position: absolute;
-
-      top: 50%;
-      left: clamp(-10px, -1vw, -6px);
-      /* dynamic horizontal offset */
-      transform: translateY(-50%);
-
-      border-width: clamp(4px, 1vw, 6px);
-      /* scales arrow size */
-      border-style: solid;
-      border-color: transparent #222222 transparent transparent;
-    }
-
-    /* --- CONTAINER (Dynamic) --- */
-    .container {
-      position: relative;
-      height: 100vh;
-      /* scales with viewport height */
-      width: 100vw;
-      /* scales with viewport width */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      padding: clamp(0.5rem, 2vh, 2rem);
-      /* optional padding scales with screen */
-      box-sizing: border-box;
-    }
-
-
-    svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-
-    .lines {
-      opacity: 0.05;
-    }
-
-    .line {
-      fill: #4C3A90;
-    }
-
-    .lights {
-      opacity: 0.9;
-    }
-
-    .light {
-      fill: #FFD120;
-    }
-
-    /* --- LOGO (Dynamic, lower with more spacing) --- */
-    .logo {
-      width: clamp(120px, 15vw, 250px);
-      /* scales with viewport width */
-      height: auto;
-      z-index: 10;
-      pointer-events: none;
-      margin-top: -15vh;
-      /* slightly higher to give more space above */
-    }
-
-    /* --- LOGO TEXT (Dynamic, more spacing above and below) --- */
-    .logo-text {
-      margin-top: 4vh;
-      /* more spacing from logo */
-      margin-bottom: 4vh;
-      /* adds spacing below text */
-      max-width: 90%;
-      font-size: clamp(14px, 2vw, 28px);
-      line-height: clamp(1.2, 1.4, 1.6);
-      color: #FFD120;
-      z-index: 10;
-      pointer-events: none;
-      text-align: center;
-      direction: rtl;
-      font-family: 'Taro', Arial, sans-serif;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(60, 60, 60, 0.6);
-      color: #FFD120;
-      font-size: clamp(12px, 1.5vw, 18px);
-      /* scales with screen width */
-      line-height: 1.6;
-      padding: clamp(10px, 1.5vh, 15px) 0;
-      /* scales with viewport height */
-      display: flex;
-      justify-content: center;
-      gap: clamp(10px, 4vw, 40px);
-      /* scales spacing */
-      z-index: 20;
-      backdrop-filter: blur(5px);
-    }
-
-    footer a {
-      color: #FFD120;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: #ffffff;
-    }
-
-    /* --- NEON BUTTONS AREA (RESPONSIVE) --- */
-    .neon-buttons {
-      margin-top: 4vh;
-      /* scales with viewport height ✅ */
-      display: flex;
-      gap: 2.5vw;
-      /* scales with viewport width ✅ */
-      z-index: 10;
-      flex-wrap: wrap;
-      /* handles small screens ✅ */
-      justify-content: center;
-    }
-
-
-    .neon-buttons a {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: clamp(12px, 2.5vh, 30px) clamp(18px, 4vw, 50px);
-      /* responsive padding ✅ */
-
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: 0.5s;
-      letter-spacing: clamp(1px, 0.3vw, 3px);
-      /* scales ✅ */
-      overflow: hidden;
-
-      font-size: clamp(14px, 2vw, 22px);
-      /* scales ✅ */
-      white-space: nowrap;
-    }
-
-
-    .neon-buttons a span {
-      position: absolute;
-      display: block;
-    }
-
-
-    /* --- BLUE NEON BUTTON --- */
-    .neon-blue {
-      color: #eeff00;
-    }
-
-    .neon-blue:hover {
-      background: #eeff00;
-      color: #050801;
-      box-shadow: 0 0 5px #eeff00,
-        0 0 25px #eeff00,
-        0 0 50px #eeff00,
-        0 0 200px #eeff00;
-    }
-
-    .neon-blue span:nth-child(1) {
-      background: linear-gradient(90deg, transparent, #eeff00);
-      animation: nb1-blue 1s linear infinite;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-blue span:nth-child(2) {
-      background: linear-gradient(180deg, transparent, #eeff00);
-      animation: nb2-blue 1s linear infinite 0.25s;
-      top: -100%;
-      right: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    .neon-blue span:nth-child(3) {
-      background: linear-gradient(270deg, transparent, #eeff00);
-      animation: nb3-blue 1s linear infinite 0.5s;
-      bottom: 0;
-      right: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-blue span:nth-child(4) {
-      background: linear-gradient(360deg, transparent, #eeff00);
-      animation: nb4-blue 1s linear infinite 0.75s;
-      bottom: -100%;
-      left: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    @keyframes nb1-blue {
-      0% {
-        left: -100%;
-      }
-
-      50%,
-      100% {
-        left: 100%;
-      }
-    }
-
-    @keyframes nb2-blue {
-      0% {
-        top: -100%;
-      }
-
-      50%,
-      100% {
-        top: 100%;
-      }
-    }
-
-    @keyframes nb3-blue {
-      0% {
-        right: -100%;
-      }
-
-      50%,
-      100% {
-        right: 100%;
-      }
-    }
-
-    @keyframes nb4-blue {
-      0% {
-        bottom: -100%;
-      }
-
-      50%,
-      100% {
-        bottom: 100%;
-      }
-    }
-
-    /* --- RED NEON BUTTON --- */
-    .neon-red {
-      color: #ffd700;
-    }
-
-    .neon-red:hover {
-      background: #ffd700;
-      color: #050801;
-      box-shadow: 0 0 5px #ffd700,
-        0 0 25px #ffd700,
-        0 0 50px #ffd700,
-        0 0 200px #ffd700;
-    }
-
-    .neon-red span:nth-child(1) {
-      background: linear-gradient(90deg, transparent, #ffd700);
-      animation: nb1 1s linear infinite;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-red span:nth-child(2) {
-      background: linear-gradient(180deg, transparent, #ffd700);
-      animation: nb2 1s linear infinite 0.25s;
-      top: -100%;
-      right: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    .neon-red span:nth-child(3) {
-      background: linear-gradient(270deg, transparent, #ffd700);
-      animation: nb3 1s linear infinite 0.5s;
-      bottom: 0;
-      right: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-red span:nth-child(4) {
-      background: linear-gradient(360deg, transparent, #ffd700);
-      animation: nb4 1s linear infinite 0.75s;
-      bottom: -100%;
-      left: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    @keyframes nb1 {
-      0% {
-        left: -100%;
-      }
-
-      50%,
-      100% {
-        left: 100%;
-      }
-    }
-
-    @keyframes nb2 {
-      0% {
-        top: -100%;
-      }
-
-      50%,
-      100% {
-        top: 100%;
-      }
-    }
-
-    @keyframes nb3 {
-      0% {
-        right: -100%;
-      }
-
-      50%,
-      100% {
-        right: 100%;
-      }
-    }
-
-    @keyframes nb4 {
-      0% {
-        bottom: -100%;
-      }
-
-      50%,
-      100% {
-        bottom: 100%;
-      }
-    }
-
-    /* --- YELLOW NEON BUTTON --- */
-    .neon-yellow {
-      color: #ffb700;
-    }
-
-    .neon-yellow:hover {
-      background: #ffb700;
-      color: #050801;
-      box-shadow: 0 0 5px #ffb700,
-        0 0 25px #ffb700,
-        0 0 50px #ffb700,
-        0 0 200px #ffb700;
-    }
-
-    .neon-yellow span:nth-child(1) {
-      background: linear-gradient(90deg, transparent, #ffb700);
-      animation: nb1-yellow 1s linear infinite;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-yellow span:nth-child(2) {
-      background: linear-gradient(180deg, transparent, #ffb700);
-      animation: nb2-yellow 1s linear infinite 0.25s;
-      top: -100%;
-      right: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    .neon-yellow span:nth-child(3) {
-      background: linear-gradient(270deg, transparent, #ffb700);
-      animation: nb3-yellow 1s linear infinite 0.5s;
-      bottom: 0;
-      right: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-yellow span:nth-child(4) {
-      background: linear-gradient(360deg, transparent, #ffb700);
-      animation: nb4-yellow 1s linear infinite 0.75s;
-      bottom: -100%;
-      left: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    @keyframes nb1-yellow {
-      0% {
-        left: -100%;
-      }
-
-      50%,
-      100% {
-        left: 100%;
-      }
-    }
-
-    @keyframes nb2-yellow {
-      0% {
-        top: -100%;
-      }
-
-      50%,
-      100% {
-        top: 100%;
-      }
-    }
-
-    @keyframes nb3-yellow {
-      0% {
-        right: -100%;
-      }
-
-      50%,
-      100% {
-        right: 100%;
-      }
-    }
-
-    @keyframes nb4-yellow {
-      0% {
-        bottom: -100%;
-      }
-
-      50%,
-      100% {
-        bottom: 100%;
-      }
-    }
-
-
-    /* --- GREEN NEON BUTTON --- */
-    .neon-green {
-      color: #ff7300;
-    }
-
-    .neon-green:hover {
-      background: #ff7300;
-      color: #050801;
-      box-shadow: 0 0 5px #ff7300,
-        0 0 25px #ff7300,
-        0 0 50px #ff7300,
-        0 0 200px #ff7300;
-    }
-
-    .neon-green span:nth-child(1) {
-      background: linear-gradient(90deg, transparent, #ff7300);
-      animation: nb1-green 1s linear infinite;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-green span:nth-child(2) {
-      background: linear-gradient(180deg, transparent, #ff7300);
-      animation: nb2-green 1s linear infinite 0.25s;
-      top: -100%;
-      right: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    .neon-green span:nth-child(3) {
-      background: linear-gradient(270deg, transparent, #ff7300);
-      animation: nb3-green 1s linear infinite 0.5s;
-      bottom: 0;
-      right: -100%;
-      width: 100%;
-      height: 2px;
-    }
-
-    .neon-green span:nth-child(4) {
-      background: linear-gradient(360deg, transparent, #ff7300);
-      animation: nb4-green 1s linear infinite 0.75s;
-      bottom: -100%;
-      left: 0;
-      width: 2px;
-      height: 100%;
-    }
-
-    @keyframes nb1-green {
-      0% {
-        left: -100%;
-      }
-
-      50%,
-      100% {
-        left: 100%;
-      }
-    }
-
-    @keyframes nb2-green {
-      0% {
-        top: -100%;
-      }
-
-      50%,
-      100% {
-        top: 100%;
-      }
-    }
-
-    @keyframes nb3-green {
-      0% {
-        right: -100%;
-      }
-
-      50%,
-      100% {
-        right: 100%;
-      }
-    }
-
-    @keyframes nb4-green {
-      0% {
-        bottom: -100%;
-      }
-
-      50%,
-      100% {
-        bottom: 100%;
-      }
-    }
-
-    /* --- RESPONSIVE / MOBILE ADJUSTMENTS --- */
-    @media screen and (max-width: 768px) {
-
-      html,
-      body {
-        font-size: 14px;
-      }
-
-      .logo {
-        width: 115px;
-        margin-top: -2.0vh;
-      }
-
-      .logo-text {
-        font-size: clamp(14px, 4.8vw, 20px);
-        line-height: 1.4;
-      }
-
-
-      .neon-buttons {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr);
-        /* 2 buttons per row */
-        gap: 2vh 2vw;
-        width: 90%;
-        max-width: 360px;
-        justify-items: center;
-        align-items: center;
-        margin: 4vh auto 12vh;
-        /* auto horizontal margin centers grid */
-      }
-
-      .neon-buttons a {
-        display: block;
-        width: 100%;
-        max-width: clamp(140px, 42vw, 200px);
-        padding: clamp(10px, 2.2vh, 18px) clamp(14px, 4vw, 26px);
-        font-size: clamp(15px, 3.8vw, 20px);
-        /* ↑ slightly larger */
-        text-align: center;
-        box-sizing: border-box;
-      }
-
-
-      footer {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        column-gap: clamp(6px, 2vw, 12px);
-        row-gap: 4px;
-        align-items: start;
-        text-align: left;
-        font-size: 11px;
-        padding: 5px 10px;
-      }
-
-      footer img {
-        width: 14px !important;
-        height: auto;
-        vertical-align: middle;
-        margin-right: 5px;
-      }
-
-      /* --- TOP LEFT BUG FIX --- */
-      #top-left-bug {
-        top: 5px;
-        left: 5px;
-        font-size: 12px;
-        gap: 4px;
-      }
-
-      #bug-msg {
-        font-size: 11px;
-        font-family: 'Taro', Arial, sans-serif !important;
-        /* force it */
-      }
-    }
-
-    #top-left-bug:hover img {
-      filter: drop-shadow(0 0 6px rgba(255, 209, 32, 0.7));
-    }
-
-    .neon-blue,
-    .neon-red,
-    .neon-yellow,
-    .neon-green {
-      font-family: 'Taro', Arial, sans-serif;
-    }
-
-    /* Apply Taro font only to Arabic footer links */
-    footer a.arabic {
-      font-family: 'Taro', Arial, sans-serif;
-    }
-
-
-    /* --- VERY SMALL HEIGHT DEVICES (height < 479px) --- */
-    @media screen and (max-height: 479px) {
-
-      /* Reduce spacing above buttons and shrink them */
-      .neon-buttons a {
-        display: block;
-        width: 100%;
-        max-width: clamp(120px, 38vw, 180px);
-        /* smaller max width */
-        padding: clamp(8px, 2vh, 14px) clamp(12px, 3vw, 22px);
-        /* smaller padding */
-        font-size: clamp(13px, 3.0vw, 18px);
-        /* slightly smaller font */
-        text-align: center;
-        box-sizing: border-box;
-      }
-
-      /* Reduce footer size */
-      footer {
-        display: grid;
-        grid-template-columns: 60% 40%;
-        column-gap: clamp(4px, 1.5vw, 10px);
-        row-gap: 3px;
-        align-items: start;
-        text-align: left;
-        font-size: 10px;
-        /* smaller font */
-        padding: 4px 8px;
-        /* tighter padding */
-      }
-
-      /* Adjust logo placement and size */
-      .logo {
-        width: 85px !important;
-        /* smaller logo */
-        margin-top: -8vh !important;
-        /* slightly higher */
-        height: auto !important;
-      }
-
-      .logo-text {
-        font-size: clamp(13px, 4vw, 18px);
-        /* smaller text */
-        line-height: 1.3;
-        margin-top: 2vh;
-        margin-bottom: 2vh;
-      }
-    }
-  </style>
-
+  <link rel="icon" type="image/jpeg" href="images/sophia.jpg">
+
+  <script>try { var l = new URLSearchParams(location.search).get("lang") || localStorage.getItem("sophia-lang"); if (l === "fr" || l === "en") { document.documentElement.lang = l; document.documentElement.dir = "ltr"; document.documentElement.className = "i18n-wait"; setTimeout(function () { document.documentElement.classList.remove("i18n-wait"); }, 1500); } } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Josefin+Sans:wght@300;400&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/site.css">
 </head>
 
-<body>
-  <!-- Top-left GitHub + bug message -->
-  <div id="top-left-bug"
-    style="position:fixed; top:12px; left:12px; z-index:9999; display:flex; align-items:center; gap:8px; font-size:14px; color:#FFD120; cursor:pointer; pointer-events:auto;">
+<body data-page="home">
 
-    <a href="https://github.com/Sophia-Philosophy-Club" target="_blank"
-      style="display:flex; align-items:center; text-decoration:none; color:#FFD120; gap:6px;">
+  <!-- Welcome -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="hero.eyebrow">نادي فلسفي تونسي</span>
+        <h1 data-i18n="hero.title">الفلسفة ليست تأملا في العالم بل أداة لفهم شروط <em>تغييره</em></h1>
+        <p data-i18n="hero.text">
+          نادي صوفيا هو فضاء للتفكير النقدي والحوار والممارسة الفلسفية. يستلهم النادي فكرة كارل ماركس: «الفلاسفة لم
+          يفعلوا سوى تفسير العالم بطرق مختلفة، لكن المهم هو تغييره»، ليربط بين التأمل والواقع الاجتماعي والثقافي.
+        </p>
+        <div class="actions">
+          <a href="debates.html" class="btn btn-gold" data-i18n="hero.cta">اكتشف نقاشاتنا ←</a>
+          <a href="https://www.facebook.com/profile.php?id=100063707634531" target="_blank" class="btn btn-ghost" data-i18n="hero.fb">تابعنا على فيسبوك</a>
+        </div>
+      </div>
+      <div class="hero-art reveal">
+        <div class="ring"></div>
+        <div class="ring r2"></div>
+        <div class="logo-lockup">
+          <img src="images/sophia.png" alt="Sophia">
+          <span lang="en" dir="ltr">PHILOSOPHY CLUB</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <!-- Circular greyish background for bug icon -->
-      <div
-        style="width:36px; height:36px; background:rgba(128,128,128,0.4); border-radius:50%; display:flex; justify-content:center; align-items:center; flex-shrink:0;">
-        <img src="images/bug.png" alt="GitHub" style="width:20px; height:20px;">
+  <!-- Numbers -->
+  <div class="stats">
+    <div class="wrap">
+      <div class="stat"><b dir="ltr">20+</b><span data-i18n="stat.debates">مناقشة و محادثة</span></div>
+      <div class="stat"><b dir="ltr">50+</b><span data-i18n="stat.articles">مقالا</span></div>
+      <div class="stat"><b dir="ltr">20</b><span data-i18n="stat.guests">ضيفًا</span></div>
+      <div class="stat"><b>9</b><span data-i18n="stat.places">فضاءات زرناها</span></div>
+    </div>
+  </div>
+
+  <!-- What we do -->
+  <section class="block">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="do.eyebrow">ماذا نفعل</span>
+          <h2 data-i18n="do.title">أربعة أبواب للدخول إلى الفلسفة</h2>
+        </div>
+        <p data-i18n="do.text">من خلال النقاشات والقراءات واللقاءات، يتساءل النادي عن الحرية والعدالة والذاكرة والسلطة وتحديات العالم المعاصر.</p>
       </div>
 
-      <!-- Arabic text with proper RTL direction -->
-      <span id="bug-msg"
-        style="opacity:0; transition:opacity 0.4s; direction:rtl; unicode-bidi:plaintext; white-space:nowrap;">
-        أبلغ عن أي مشكلة!
-      </span>
-    </a>
-  </div>
-  <script>
-    const bugBox = document.getElementById("top-left-bug");
-
-    bugBox.addEventListener("mouseenter", () => {
-      gsap.to(bugBox, {
-        x: 3,
-        duration: 0.15,
-        yoyo: true,
-        repeat: 3,
-        ease: "power1.inOut"
-      });
-    });
-  </script>
-
-  <div class="container">
-    <!-- SVG background -->
-    <svg id="lines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-      <g class="lines">
-        <rect class="line" x="1253.6" width="4.5" height="1080" />
-        <rect class="line" x="873.3" width="1.8" height="1080" />
-        <rect class="line" x="1100" width="1.8" height="1080" />
-        <rect class="line" x="1547.1" width="4.5" height="1080" />
-        <rect class="line" x="615" width="4.5" height="1080" />
-        <rect class="line" x="684.6" width="1.8" height="1080" />
-        <rect class="line" x="1369.4" width="1.8" height="1080" />
-        <rect class="line" x="1310.2" width="0.9" height="1080" />
-        <rect class="line" x="1233.4" width="0.9" height="1080" />
-        <rect class="line" x="124.2" width="0.9" height="1080" />
-        <rect class="line" x="1818.4" width="4.5" height="1080" />
-        <rect class="line" x="70.3" width="4.5" height="1080" />
-        <rect class="line" x="1618.6" width="1.8" height="1080" />
-        <rect class="line" x="455.9" width="1.8" height="1080" />
-        <rect class="line" x="328.7" width="1.8" height="1080" />
-        <rect class="line" x="300.8" width="4.6" height="1080" />
-        <rect class="line" x="1666.4" width="0.9" height="1080" />
-      </g>
-
-      <g class="lights">
-        <path class="light light1"
-          d="M619.5,298.4H615v19.5h4.5V298.4z M619.5,674.8H615v9.8h4.5V674.8z M619.5,135.1H615v5.6h4.5V135.1z M619.5,55.5H615v68.7h4.5V55.5z" />
-        <path class="light light2"
-          d="M1258.2,531.9h-4.5v8.1h4.5V531.9z M1258.2,497.9h-4.5v17.9h4.5V497.9z M1258.2,0h-4.5v25.3h4.5V0z M1258.2,252.2h-4.5v42.4h4.5V252.2z" />
-        <path class="light light3"
-          d="M875.1,123.8h-1.8v4h1.8V123.8z M875.1,289.4h-1.8v24.1h1.8V289.4z M875.1,0h-1.8v31.4h1.8V0z M875.1,50.2 h-1.8v11.5h1.8V50.2z" />
-        <path class="light light4"
-          d="M1101.8,983.8h-1.8v8.2h1.8V983.8z M1101.8,1075.9h-1.8v4.1h1.8V1075.9z M1101.8,873.7h-1.8v4.2h1.8V873.7z M1101.8,851h-1.8v18.2h1.8V851z" />
-        <path class="light light5"
-          d="M686.4,822.7h-1.8v3.8h1.8V822.7z M686.4,928.4h-1.8v23h1.8V928.4z M686.4,1043.8h-1.8v36.2h1.8V1043.8z" />
-        <path class="light light6"
-          d="M1551.6,860.9h-4.4v-34.1h4.4V860.9z M1551.6,533.5h-4.4v-13.9h4.4V533.5z M1551.6,1080h-4.4v-89.1h4.4V1080z" />
-        <path class="light light7"
-          d="M1311.1,707.7h-0.9V698h0.9V707.7z M1311.1,436.8h-0.9v-58.9h0.9V436.8z M1311.1,140.7h-0.9V48h0.9V140.7z" />
-        <path class="light light8" d="M125.1,514.5h-0.9v-9.7h0.9V514.5z M125.1,243.6h-0.9v-58.9h0.9V243.6z" />
-        <path class="light light9"
-          d="M305.4,806.7h-4.6v-42.5h4.6V806.7z M305.4,398.5h-4.6v-17.3h4.6V398.5z M305.4,1080h-4.6V968.8h4.6V1080z" />
-        <path class="light light10"
-          d="M1822.9,170.7h-4.5v13.7h4.5V170.7z M1822.9,435.1h-4.5v6.8h4.5V435.1z M1822.9,55.9h-4.5v4h4.5V55.9z M1822.9,0h-4.5v48.3h4.5V0z" />
-        <path class="light light11"
-          d="M1666.4,331.5h0.9v9.7h-0.9V331.5z M1666.4,602.4h0.9v58.9h-0.9V602.4z M1666.4,898.5h0.9v92.7h-0.9V898.5z" />
-        <path class="light light12"
-          d="M1620.4,200.7h-1.8v6.4h1.8V200.7z M1620.4,469.1h-1.8v39h1.8V469.1z M1620.4,0h-1.8v51h1.8V0z M1620.4,81.3 h-1.8V100h1.8V81.3z" />
-        <path class="light light13"
-          d="M74.8,201h-4.5v16.2h4.5V201z M74.8,512.3h-4.5v8.1h4.5V512.3z M74.8,65.8h-4.5v4.6h4.5V65.8z M74.8,0h-4.5 v56.8h4.5V0z" />
-        <path class="light light14"
-          d="M1371.2,655.3h-1.8v6.3h1.8V655.3z M1371.2,829.7h-1.8v37.9h1.8V829.7z M1371.2,1020.3h-1.8v59.7h1.8V1020.3z" />
-        <path class="light light15"
-          d="M1234.3,898.1h-0.9v-4.9h0.9V898.1z M1234.3,762.5h-0.9v-29.5h0.9V762.5z M1234.3,614.4h-0.9v-46.4h0.9V614.4z" />
-        <path class="light light16" d="M457.7,1010.8h-1.8v-18.1h1.8V1010.8z M457.7,507.5h-1.8V398h1.8V507.5z" />
-        <path class="light light17"
-          d="M330.5,170.7h-1.8v13.7h1.8V170.7z M330.5,435.1h-1.8v6.8h1.8V435.1z M330.5,55.9h-1.8v4h1.8V55.9z M330.5,0 h-1.8v48.3h1.8V0z" />
-      </g>
-    </svg>
-
-    <!-- Logo -->
-    <img src="images/sophia.png" alt="Logo" class="logo">
-    <!-- Text under logo -->
-    <div class="logo-text">
-      "لم يفعل الفلاسفة سوى تفسير العالم بطرق مختلفة، لكن المهمة الحقيقية هي تغييره."
-      <br>
-      <span style="font-size: 0.9em; opacity: 0.8;">— كارل ماركس</span>
+      <div class="cards">
+        <a href="debates.html" class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></div>
+          <h3 data-i18n="c1.title">المناقشات و المحادثات</h3>
+          <p data-i18n="c1.text">جلسات حوار مفتوحة حول أسئلة الفلسفة و المجتمع، يشارك فيها الجميع.</p>
+          <span class="go" data-i18n="c1.go">تصفّح المناقشات ←</span>
+        </a>
+        <a href="articles.html" class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-1.5Z"/><path d="M8 7h6M8 11h6"/></svg></div>
+          <h3 data-i18n="c2.title">المقالات</h3>
+          <p data-i18n="c2.text">نصوص يكتبها أعضاء النادي في الفلسفة و الفكر و الثقافة.</p>
+          <span class="go" data-i18n="c2.go">اقرأ المقالات ←</span>
+        </a>
+        <a href="videos.html" class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></svg></div>
+          <h3 data-i18n="c3.title">الفيديوهات و الوسائط</h3>
+          <p data-i18n="c3.text">مقالات صوتية و تسجيلات من لقاءاتنا: «لغة الضاد»، «الحب في عصر الرأسمالية»...</p>
+          <span class="go" data-i18n="c3.go">شاهد الفيديوهات ←</span>
+        </a>
+        <a href="guests.html" class="card reveal">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 20a6.5 6.5 0 0 0-3-5.5"/></svg></div>
+          <h3 data-i18n="c4.title">الضيوف و الزيارات</h3>
+          <p data-i18n="c4.text">فلاسفة و باحثون استضفناهم، و فضاءات ثقافية حملنا إليها النقاش.</p>
+          <span class="go" data-i18n="c4.go">تعرّف عليهم ←</span>
+        </a>
+      </div>
     </div>
-    <div class="neon-buttons">
+  </section>
 
-      <!-- Blue Videos Button -->
-      <a href="videos.html" class="neon-blue">
-        <span></span><span></span><span></span><span></span>
-        الفيديوهات و الوسائط </a>
-
-      <!-- Red Debate Button -->
-      <a href="debates.html" class="neon-red">
-        <span></span><span></span><span></span><span></span>
-        المناقشات و المحادثات
-      </a>
-
-      <!-- Yellow Articles Button -->
-      <a href="articles.html" class="neon-yellow">
-        <span></span><span></span><span></span><span></span>
-        المقالات
-      </a>
-
-      <!-- Green Guests & Members Button -->
-      <a href="guests.html" class="neon-green">
-        <span></span><span></span><span></span><span></span>
-        الضيوف و الزيارات
-      </a>
-
-
+  <!-- Quote -->
+  <section class="quote">
+    <div class="wrap reveal">
+      <blockquote data-i18n="quote.text">الفلسفة هي، في النهاية، صراع طبقي في حقل النظرية.</blockquote>
+      <cite data-i18n="quote.by">— <b>لويس ألتوسير</b>، مقدمات في النقد الذاتي</cite>
     </div>
+  </section>
 
+  <!-- Guests preview -->
+  <section class="block">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="g.eyebrow">ضيوفنا</span>
+          <h2 data-i18n="g.title">أصوات حاورناها</h2>
+        </div>
+        <a href="guests.html" class="link-more" data-i18n="g.more">كل الضيوف ←</a>
+      </div>
 
+      <div class="guests preview">
+        <div class="guest reveal">
+          <div class="photo"><img src="images/يوسف_الصديق.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g1.name">يوسف الصديق</h3>
+          <p data-i18n="g1.role">فيلسوف و عالم أنثروبولوجيا</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/أم الزين بن شيخة.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g2.name">أم الزين بن شيخة</h3>
+          <p data-i18n="g2.role">باحثة متخصصة في الفلسفة</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/عبد السلام حيدوري.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g3.name">عبد السلام حيدوري</h3>
+          <p data-i18n="g3.role">باحث في الفلسفة الحديثة و المعاصرة</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/غادة_الشلبي.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g4.name">غادة الشلبي</h3>
+          <p data-i18n="g4.role">باحثة و ناشطة</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/فهمي_الرمضاني.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g5.name">فهمي الرمضاني</h3>
+          <p data-i18n="g5.role">أستاذ في التاريخ</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/عبد_الستار_السحباني.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g6.name">عبد الستار السحباني</h3>
+          <p data-i18n="g6.role">مختص في علم الإجتماع</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/سعدية_مصباح.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g7.name">سعدية مصباح</h3>
+          <p data-i18n="g7.role">ناشطة حقوقية</p>
+        </div>
+        <div class="guest reveal">
+          <div class="photo"><img src="images/مهدي سعيدان.png" alt="" loading="lazy"></div>
+          <h3 data-i18n="g8.name">مهدي سعيدان</h3>
+          <p data-i18n="g8.role">أستاذ فلسفة</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Places preview -->
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="head reveal">
+        <div>
+          <span class="eyebrow" data-i18n="p.eyebrow">زياراتنا</span>
+          <h2 data-i18n="p.title">الفلسفة خارج القاعة</h2>
+        </div>
+        <a href="guests.html#visits" class="link-more" data-i18n="p.more">كل الزيارات ←</a>
+      </div>
+
+      <div class="places reveal">
+        <figure class="place-img big">
+          <img src="images/كلية العلوم القانونية و السياسية و الاجتماعية بتونس.webp" alt="" loading="lazy">
+          <figcaption data-i18n="p1">منشأ النادي: كلية العلوم القانونية و السياسية و الاجتماعية بتونس</figcaption>
+        </figure>
+        <div class="side">
+          <figure class="place-img">
+            <img src="images/Café Culturel Biblio'Thé 3.webp" alt="" loading="lazy">
+            <figcaption>Café Culturel Biblio'Thé</figcaption>
+          </figure>
+          <figure class="place-img">
+            <img src="images/دار الثقافة ابن خلدون.webp" alt="" loading="lazy">
+            <figcaption data-i18n="p3">دار الثقافة ابن خلدون</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="chips reveal">
+        <span class="chip">Afterwork Coffeeshop</span>
+        <span class="chip">Espace Culturel Aykart</span>
+        <span class="chip" data-i18n="p.c1">المدرسة الإعدادية النموذجية بمقرين</span>
+        <span class="chip" data-i18n="p.c2">المعهد العالي لعلوم و تكنولوجيات البيئة ببرج السدرية</span>
+        <span class="chip" data-i18n="p.c3">المعهد العالي للعلوم الإنسانية بتونس</span>
+        <span class="chip" data-i18n="p.c4">دار الثقافة باب العسل</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join -->
+  <div class="wrap">
+    <div class="join reveal">
+      <h2 data-i18n="j.title">انضمّ إلى الحوار</h2>
+      <p data-i18n="j.text">لقاءاتنا مفتوحة للجميع. تابع صفحاتنا لتعرف موعد النقاش القادم، أو راسلنا مباشرة.</p>
+      <div class="actions">
+        <a href="mailto:sophia.club2020@gmail.com" class="btn btn-gold" data-i18n="j.mail">راسلنا</a>
+        <a href="https://www.instagram.com/sophiaphilosophy/" target="_blank" class="btn btn-ghost" data-i18n="j.ig">تابعنا على انستغرام</a>
+      </div>
+    </div>
   </div>
 
-  <!-- Footer Bar -->
-  <footer>
-    <span>
-      <img src="images/mail.png" alt="Email" style="width:20px; vertical-align:middle; margin-right:5px;">
-      <a href="mailto:sophia.club2020@gmail.com">sophia.club2020@gmail.com</a>
-    </span>
-
-    <span>
-      <img src="images/facebook.png" alt="Facebook" style="width:26px; vertical-align:middle; margin-right:5px;">
-      <a href="https://www.facebook.com/profile.php?id=100063707634531" target="_blank" class="arabic">صفحة فيسبوك</a>
-    </span>
-
-    <span>
-      <img src="images/instagram.png" alt="Instagram" style="width:28px; vertical-align:middle; margin-right:5px;">
-      <a href="https://www.instagram.com/sophiaphilosophy/?hl=fr" target="_blank" class="arabic">صفحة انستغرام</a>
-    </span>
-
-    <span>
-      <img src="images/youtube.png" alt="Youtube" style="width:28px; vertical-align:middle; margin-right:5px;">
-      <a href="https://www.youtube.com/@sophiaclub2020" target="_blank" class="arabic">صفحة اليوتوب</a>
-    </span>
-
-    <span>
-      <img src="images/medium.png" alt="medium" style="width:28px; vertical-align:middle; margin-right:5px;">
-      <a href="https://medium.com/@sophia.club2020" target="_blank" class="arabic">Medium</a>
-    </span>
-
-  </footer>
-
-
-  <!-- Top-left GitHub + bug message script -->
   <script>
-    const messages = [
-      "واجهت خطأ؟ أرسل لنا تقريرًا!",
-      "ساعدنا في تحسين الموقع عبر الإبلاغ عن الأخطاء!",
-      "لاحظت خللًا؟ لا تتردد بالإبلاغ!"
-    ];
-
-    const bugMsg = document.getElementById("bug-msg");
-    let index = 0;
-
-    function showMessage() {
-      bugMsg.textContent = messages[index];
-      bugMsg.style.opacity = 1;
-
-      setTimeout(() => {
-        bugMsg.style.opacity = 0;
-        index = (index + 1) % messages.length;
-      }, 2500); // message visible for 2.5 seconds
-    }
-
-    // Repeat every 3 seconds
-    showMessage();
-    setInterval(showMessage, 3000);
+    window.PAGE_I18N = {
+      fr: {
+        "title": "Club de philosophie Sophia",
+        "hero.eyebrow": "Club de philosophie tunisien",
+        "hero.title": "La philosophie n’est pas une contemplation du monde, mais un outil pour comprendre les conditions de sa <em>transformation</em>",
+        "hero.text": "Le club Sophia est un espace de pensée critique, de dialogue et de pratique philosophique. Il s’inspire de l’idée de Karl Marx&nbsp;: «&nbsp;Les philosophes n’ont fait qu’interpréter le monde de différentes manières, ce qui importe, c’est de le transformer&nbsp;», pour relier la réflexion à la réalité sociale et culturelle.",
+        "hero.cta": "Découvrir nos débats →", "hero.fb": "Suivez-nous sur Facebook",
+        "stat.debates": "débats et discussions", "stat.articles": "articles", "stat.guests": "invités", "stat.places": "lieux visités",
+        "do.eyebrow": "Ce que nous faisons", "do.title": "Quatre portes d’entrée vers la philosophie",
+        "do.text": "À travers les débats, les lectures et les rencontres, le club interroge la liberté, la justice, la mémoire, le pouvoir et les défis du monde contemporain.",
+        "c1.title": "Débats et discussions", "c1.text": "Des séances de dialogue ouvertes sur les questions de philosophie et de société, où chacun prend la parole.", "c1.go": "Parcourir les débats →",
+        "c2.title": "Articles", "c2.text": "Des textes écrits par les membres du club sur la philosophie, la pensée et la culture.", "c2.go": "Lire les articles →",
+        "c3.title": "Vidéos et médias", "c3.text": "Des articles audio et des enregistrements de nos rencontres&nbsp;: «&nbsp;La langue du Dad&nbsp;», «&nbsp;L’amour à l’ère du capitalisme&nbsp;»…", "c3.go": "Voir les vidéos →",
+        "c4.title": "Invités et visites", "c4.text": "Les philosophes et chercheurs que nous avons reçus, et les lieux culturels où nous avons porté le débat.", "c4.go": "Les découvrir →",
+        "quote.text": "La philosophie est, en dernière instance, lutte de classe dans la théorie.",
+        "quote.by": "— <b>Louis Althusser</b>, <i>Éléments d’autocritique</i>",
+        "g.eyebrow": "Nos invités", "g.title": "Des voix avec qui nous avons dialogué", "g.more": "Tous les invités →",
+        "g1.name": "Youssef Seddik", "g1.role": "Philosophe et anthropologue",
+        "g2.name": "Oum Ezzine Ben Cheikha", "g2.role": "Chercheuse spécialisée en philosophie",
+        "g3.name": "Abdessalem Hidouri", "g3.role": "Chercheur en philosophie moderne et contemporaine",
+        "g4.name": "Ghada Chelbi", "g4.role": "Chercheuse et militante",
+        "g5.name": "Fahmi Ramadhani", "g5.role": "Professeur d’histoire",
+        "g6.name": "Abdessatar Sahbani", "g6.role": "Sociologue",
+        "g7.name": "Saadia Mosbah", "g7.role": "Militante des droits humains",
+        "g8.name": "Mehdi Saidane", "g8.role": "Professeur de philosophie",
+        "p.eyebrow": "Nos visites", "p.title": "La philosophie hors les murs", "p.more": "Toutes les visites →",
+        "p1": "Berceau du club&nbsp;: Faculté des sciences juridiques, politiques et sociales de Tunis",
+        "p3": "Maison de la culture Ibn Khaldoun",
+        "p.c1": "Collège pilote de Mégrine", "p.c2": "ISSTE Borj Cédria", "p.c3": "Institut supérieur des sciences humaines de Tunis", "p.c4": "Maison de la culture Bab El Assal",
+        "j.title": "Rejoignez la discussion",
+        "j.text": "Nos rencontres sont ouvertes à tous. Suivez nos pages pour connaître la date du prochain débat, ou écrivez-nous directement.",
+        "j.mail": "Écrivez-nous", "j.ig": "Suivez-nous sur Instagram"
+      },
+      en: {
+        "title": "Sophia Philosophy Club",
+        "hero.eyebrow": "A Tunisian philosophy club",
+        "hero.title": "Philosophy is not a contemplation of the world, but a tool for understanding the conditions of its <em>change</em>",
+        "hero.text": "Sophia is a space for critical thinking, dialogue and philosophical practice. The club draws on Karl Marx’s idea, “The philosophers have only interpreted the world, in various ways; the point is to change it”, linking reflection to social and cultural reality.",
+        "hero.cta": "Explore our debates →", "hero.fb": "Follow us on Facebook",
+        "stat.debates": "debates & talks", "stat.articles": "articles", "stat.guests": "guests", "stat.places": "places visited",
+        "do.eyebrow": "What we do", "do.title": "Four doors into philosophy",
+        "do.text": "Through debates, readings and meetings, the club questions freedom, justice, memory, power and the challenges of the contemporary world.",
+        "c1.title": "Debates & talks", "c1.text": "Open dialogue sessions on questions of philosophy and society, where everyone takes part.", "c1.go": "Browse the debates →",
+        "c2.title": "Articles", "c2.text": "Texts written by club members on philosophy, thought and culture.", "c2.go": "Read the articles →",
+        "c3.title": "Videos & media", "c3.text": "Audio essays and recordings from our meetings: “The Language of Dad”, “Love in the Age of Capitalism”…", "c3.go": "Watch the videos →",
+        "c4.title": "Guests & visits", "c4.text": "The philosophers and researchers we have hosted, and the cultural spaces where we took the debate.", "c4.go": "Meet them →",
+        "quote.text": "Philosophy is, in the last instance, class struggle in the field of theory.",
+        "quote.by": "— <b>Louis Althusser</b>, <i>Essays in Self-Criticism</i>",
+        "g.eyebrow": "Our guests", "g.title": "Voices we have talked with", "g.more": "All guests →",
+        "g1.name": "Youssef Seddik", "g1.role": "Philosopher and anthropologist",
+        "g2.name": "Oum Ezzine Ben Cheikha", "g2.role": "Researcher in philosophy",
+        "g3.name": "Abdessalem Hidouri", "g3.role": "Researcher in modern and contemporary philosophy",
+        "g4.name": "Ghada Chelbi", "g4.role": "Researcher and activist",
+        "g5.name": "Fahmi Ramadhani", "g5.role": "History teacher",
+        "g6.name": "Abdessatar Sahbani", "g6.role": "Sociologist",
+        "g7.name": "Saadia Mosbah", "g7.role": "Human rights activist",
+        "g8.name": "Mehdi Saidane", "g8.role": "Philosophy teacher",
+        "p.eyebrow": "Our visits", "p.title": "Philosophy beyond the classroom", "p.more": "All visits →",
+        "p1": "Where it all began: Faculty of Legal, Political and Social Sciences of Tunis",
+        "p3": "Ibn Khaldoun House of Culture",
+        "p.c1": "Megrine Pilot Middle School", "p.c2": "ISSTE Borj Cédria", "p.c3": "Higher Institute of Human Sciences of Tunis", "p.c4": "Bab El Assal House of Culture",
+        "j.title": "Join the conversation",
+        "j.text": "Our meetings are open to everyone. Follow our pages to know when the next debate is, or write to us directly.",
+        "j.mail": "Write to us", "j.ig": "Follow us on Instagram"
+      }
+    };
   </script>
-
-
-  <script>
-    const SVG_HEIGHT = 1080;
-
-    function animateWithRandomNumber(myClass, from, to) {
-      TweenLite.fromTo(
-        myClass,
-        Math.floor(Math.random() * 20) + 1,
-        { y: from },
-        {
-          y: to,
-          onComplete: animateWithRandomNumber,
-          onCompleteParams: [myClass, from, to],
-          ease: Linear.easeNone
-        }
-      );
-    }
-
-
-    const itemsDown = [".light4", ".light5", ".light6", ".light7", ".light8", ".light11", ".light12", ".light13", ".light14", ".light15", ".light16"];
-    itemsDown.forEach(e => animateWithRandomNumber(e, -1080, 1080));
-
-    const itemsUp = [".light1", ".light2", ".light3", ".light9", ".light10", ".light17"];
-    itemsUp.forEach(e => animateWithRandomNumber(e, 1080, -1080));
-  </script>
+  <script src="js/site.js"></script>
 </body>
 
 </html>
