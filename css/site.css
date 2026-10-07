@@ -231,6 +231,7 @@ html[dir="ltr"] .quote blockquote::before { content: "“"; }
 .guest .photo img { width: 92%; height: 92%; object-fit: contain; object-position: bottom; filter: grayscale(1) contrast(1.05); transition: filter .4s, transform .4s; }
 .guest .photo.logo { align-items: center; background: #fff2b8; }
 .guest .photo.logo img { width: 80%; height: auto; filter: none; }
+.guest .photo.logo.dark { background: linear-gradient(180deg, #2a251a 0%, #18150f 100%); }
 .guest:hover .photo { border-color: rgba(255, 209, 32, 0.45); }
 .guest:hover .photo img { filter: grayscale(0); transform: scale(1.03); }
 .guest h3 { font-size: 1.1rem; margin-top: 16px; }
